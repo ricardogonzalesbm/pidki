@@ -14,6 +14,10 @@ const palette = {
   gray700: '#374151',
   gray800: '#1F2937',
   gray900: '#111827',
+  red500: '#EF4444',
+  red600: '#DC2626',
+  yellow500: '#F59E0B',
+  yellow600: '#D97706',
 };
 
 const theme = createTheme({
@@ -26,6 +30,17 @@ const theme = createTheme({
     textSecondary: palette.gray600,
     textInverse: palette.white,
     border: palette.gray200,
+    gray100: palette.gray100,
+    buttonPrimary: palette.cyan,
+    buttonPrimaryText: palette.white,
+    buttonSecondary: palette.gray200,
+    buttonSecondaryText: palette.gray900,
+    buttonTertiary: 'transparent',
+    buttonTertiaryText: palette.cyan,
+    buttonDanger: palette.red500,
+    buttonDangerText: palette.white,
+    buttonWarning: palette.yellow500,
+    buttonWarningText: palette.white,
   },
   spacing: {
     xs: 4,
