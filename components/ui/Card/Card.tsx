@@ -1,7 +1,7 @@
-import React from 'react';
-import Box from '@/components/Box';
-import Text from '@/components/Text';
-import Button from '@/components/ui/Button/Button';
+import Box from "@/components/Box";
+import Text from "@/components/Text";
+import Button from "@/components/ui/Button/Button";
+import React from "react";
 
 interface CardProps {
   totalPayback: number;
@@ -44,10 +44,10 @@ export default function Card({
           <Text
             variant="caption"
             style={{
-              color: '#FFFFFF',
-              fontWeight: '600',
+              color: "#FFFFFF",
+              fontWeight: "600",
               fontSize: 12,
-              textTransform: 'uppercase',
+              textTransform: "uppercase",
             }}
           >
             {badgeText}
@@ -55,9 +55,13 @@ export default function Card({
         </Box>
       )}
 
-      <Box padding="l" paddingBottom="m">
-        <Box flexDirection="row" justifyContent="space-between" alignItems="center">
-          <Box style={{ flex: 0.7 }}>
+      <Box>
+        <Box
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Box style={{ flex: 0.7 }} padding="l" paddingBottom="m">
             <Text variant="caption" marginBottom="xs">
               Total Payback
             </Text>
@@ -65,25 +69,29 @@ export default function Card({
               variant="header"
               style={{
                 fontSize: 28,
-                fontWeight: 'bold',
+                fontWeight: "bold",
               }}
             >
-              S/ {totalPayback.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              S/{" "}
+              {totalPayback.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             </Text>
           </Box>
 
-          <Box width={1} height={60} backgroundColor="border" marginHorizontal="m" />
+          <Box width={1} alignSelf="stretch" backgroundColor="border" />
 
-          <Box style={{ flex: 0.3 }} alignItems="flex-end">
+          <Box style={{ flex: 0.3 }} alignItems="center">
             <Text variant="caption" marginBottom="xs">
-              Interest Rate
+              Interés
             </Text>
             <Text
               variant="subheader"
               style={{
                 fontSize: 24,
-                fontWeight: '600',
-                color: '#2DD4BF',
+                fontWeight: "600",
+                color: "#2DD4BF",
               }}
             >
               {interestRate}%
@@ -102,33 +110,33 @@ export default function Card({
           marginBottom="m"
         >
           <Text variant="body" style={{ lineHeight: 22 }}>
-            You'll payback{' '}
-            <Text variant="body" style={{ fontWeight: 'bold' }}>
-              S/ {monthlyPayment.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </Text>{' '}
-            every month. Your loan will be paid off in{' '}
-            <Text variant="body" style={{ fontWeight: 'bold' }}>
-              {paymentPeriodMonths} {paymentPeriodMonths === 1 ? 'month' : 'months'}
+            You'll payback{" "}
+            <Text variant="body" style={{ fontWeight: "bold" }}>
+              S/{" "}
+              {monthlyPayment.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </Text>{" "}
+            every month. Your loan will be paid off in{" "}
+            <Text variant="body" style={{ fontWeight: "bold" }}>
+              {paymentPeriodMonths}{" "}
+              {paymentPeriodMonths === 1 ? "month" : "months"}
             </Text>
             .
           </Text>
         </Box>
 
-        <Button
-          variant="primary"
-          fullWidth
-          onPress={onAccept}
-          size="medium"
-        >
+        <Button variant="primary" fullWidth onPress={onAccept} size="medium">
           Accept Offer
         </Button>
 
         <Text
           variant="caption"
           style={{
-            textAlign: 'center',
+            textAlign: "center",
             marginTop: 12,
-            color: '#2DD4BF',
+            color: "#2DD4BF",
             fontSize: 12,
           }}
         >

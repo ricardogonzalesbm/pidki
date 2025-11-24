@@ -4,6 +4,7 @@ import Text from '@/components/Text';
 import Button from '@/components/ui/Button/Button';
 import IconButton from '@/components/ui/IconButton/IconButton';
 import Card from '@/components/ui/Card/Card';
+import LoanReasons from '@/components/ui/LoanReasons/LoanReasons';
 
 export default function HomeScreen() {
   return (
@@ -102,6 +103,16 @@ export default function HomeScreen() {
           <Button fullWidth variant="primary" onPress={() => console.log('Full Width')}>
             Full Width Button
           </Button>
+        </Box>
+
+        <Text variant="header" marginTop="xl" marginBottom="l">
+          LoanReasons Examples
+        </Text>
+
+        <Box marginBottom="xl">
+          <LoanReasons
+            onSelectReason={(reason) => console.log('Selected reason:', reason)}
+          />
         </Box>
 
         <Text variant="header" marginTop="xl" marginBottom="l">
