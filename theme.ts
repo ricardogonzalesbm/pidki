@@ -41,6 +41,7 @@ const theme = createTheme({
     buttonDangerText: palette.white,
     buttonWarning: palette.yellow500,
     buttonWarningText: palette.white,
+    primary: palette.cyan
   },
   spacing: {
     xs: 4,

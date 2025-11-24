@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ScrollView } from 'react-native';
 import Box from '@/components/Box';
 import Text from '@/components/Text';
@@ -5,8 +6,28 @@ import Button from '@/components/ui/Button/Button';
 import IconButton from '@/components/ui/IconButton/IconButton';
 import Card from '@/components/ui/Card/Card';
 import LoanReasons from '@/components/ui/LoanReasons/LoanReasons';
+import Select from '@/components/ui/Select/Select';
 
 export default function HomeScreen() {
+  const [selectedCountry, setSelectedCountry] = useState<string>();
+  const [selectedPeriod, setSelectedPeriod] = useState<string>();
+
+  const countryOptions = [
+    { label: 'Perú', value: 'peru' },
+    { label: 'Argentina', value: 'argentina' },
+    { label: 'Chile', value: 'chile' },
+    { label: 'Colombia', value: 'colombia' },
+    { label: 'México', value: 'mexico' },
+  ];
+
+  const periodOptions = [
+    { label: '1 mes', value: '1' },
+    { label: '3 meses', value: '3' },
+    { label: '6 meses', value: '6' },
+    { label: '12 meses', value: '12' },
+    { label: '24 meses', value: '24' },
+  ];
+
   return (
     <ScrollView style={{ flex: 1 }}>
       <Box flex={1} backgroundColor="mainBackground" padding="m">
@@ -103,6 +124,27 @@ export default function HomeScreen() {
           <Button fullWidth variant="primary" onPress={() => console.log('Full Width')}>
             Full Width Button
           </Button>
+        </Box>
+
+        <Text variant="header" marginTop="xl" marginBottom="l">
+          Select Examples
+        </Text>
+
+        <Box gap="m" marginBottom="xl">
+          <Select
+            label="País"
+            options={countryOptions}
+            value={selectedCountry}
+            onSelect={setSelectedCountry}
+            placeholder="Selecciona un país"
+          />
+          <Select
+            label="Período de pago"
+            options={periodOptions}
+            value={selectedPeriod}
+            onSelect={setSelectedPeriod}
+            placeholder="Selecciona un período"
+          />
         </Box>
 
         <Text variant="header" marginTop="xl" marginBottom="l">
