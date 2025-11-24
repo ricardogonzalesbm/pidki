@@ -6,6 +6,7 @@ import IconButton from "@/components/ui/IconButton/IconButton";
 import LoanReasons from "@/components/ui/LoanReasons/LoanReasons";
 import Score from "@/components/ui/Score/Score";
 import Select from "@/components/ui/Select/Select";
+import ProgressBar from "@/components/ui/ProgressBar/ProgressBar";
 import { useState } from "react";
 import { ScrollView } from "react-native";
 
@@ -146,6 +147,17 @@ export default function HomeScreen() {
 
         <Box marginBottom="xl">
           <Score score={90} />
+        </Box>
+
+        <Text variant="header" marginTop="xl" marginBottom="l">
+          ProgressBar
+        </Text>
+
+        <Box gap="m" marginBottom="xl">
+          <ProgressBar progress={75} label="Completion" />
+          <ProgressBar progress={45} label="Profile" />
+          <ProgressBar progress={90} label="Documents" />
+          <ProgressBar progress={30} />
         </Box>
 
         <Text variant="header" marginTop="xl" marginBottom="l">
