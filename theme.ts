@@ -2,9 +2,9 @@ import { createTheme } from '@shopify/restyle';
 
 const palette = {
   primary: '#18233a',
-  secondary: '#677daa',
+  secondary: '#667bab',
   tertyary: '#bdcae7',
-  fourty: '#f5d3e0',
+  fourty: '#f3d3e0',
   cyan: '#2DD4BF',
   white: '#FFFFFF',
   black: '#000000',
