@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { useTheme } from "@shopify/restyle";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  Easing,
-} from "react-native-reanimated";
 import Box from "@/components/Box";
 import Text from "@/components/Text";
 import { Theme } from "@/theme";
+import { useTheme } from "@shopify/restyle";
+import React, { useEffect } from "react";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 interface ProgressBarProps {
   progress: number; // Value between 0 and 100
@@ -55,7 +55,10 @@ export default function ProgressBar({
           {showPercentage && (
             <Text
               variant="body"
-              style={{ fontFamily: "Quicksand-SemiBold", color: theme.colors.buttonPrimary }}
+              style={{
+                fontFamily: "Quicksand-SemiBold",
+                color: theme.colors.buttonPrimary,
+              }}
             >
               {Math.round(clampedProgress)}%
             </Text>
@@ -65,7 +68,7 @@ export default function ProgressBar({
 
       <Box
         height={12}
-        backgroundColor="gray100"
+        backgroundColor="tertiary"
         borderRadius={6}
         overflow="hidden"
       >

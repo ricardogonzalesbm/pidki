@@ -1,8 +1,8 @@
-import React from "react";
-import { useTheme } from "@shopify/restyle";
 import Box from "@/components/Box";
 import Text from "@/components/Text";
 import { Theme } from "@/theme";
+import { useTheme } from "@shopify/restyle";
+import React from "react";
 
 interface ScoreProps {
   score: number;
@@ -45,7 +45,7 @@ export default function Score({ score }: ScoreProps) {
         width={80}
         height={80}
         borderRadius={40}
-        backgroundColor="buttonPrimaryText"
+        backgroundColor="fourty"
         alignItems="center"
         justifyContent="center"
         marginLeft="m"

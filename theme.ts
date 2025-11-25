@@ -3,7 +3,7 @@ import { createTheme } from '@shopify/restyle';
 const palette = {
   primary: '#18233a',
   secondary: '#667bab',
-  tertyary: '#bdcae7',
+  tertiary: '#bdcae7',
   fourty: '#f3d3e0',
   cyan: '#2DD4BF',
   white: '#FFFFFF',
@@ -19,7 +19,7 @@ const palette = {
   gray900: '#111827',
   red500: '#EF4444',
   red600: '#DC2626',
-  yellow500: '#f3e528ff',
+  yellow500: '#EBC106',
   yellow600: '#D97706',
 };
 
@@ -36,7 +36,7 @@ const theme = createTheme({
     gray100: palette.gray100,
     buttonPrimary: palette.primary,
     buttonPrimaryText: palette.white,
-    buttonSecondary: palette.gray200,
+    buttonSecondary: palette.tertiary,
     buttonSecondaryText: palette.gray900,
     buttonTertiary: 'transparent',
     buttonTertiaryText: palette.primary,
@@ -44,7 +44,12 @@ const theme = createTheme({
     buttonDangerText: palette.white,
     buttonWarning: palette.yellow500,
     buttonWarningText: palette.white,
-    primary: palette.primary
+    primary: palette.primary,
+    secondary: palette.secondary,
+    tertiary: palette.tertiary,
+    fourty: palette.fourty,
+    white: palette.white,
+    cyan: palette.cyan,
   },
   spacing: {
     xs: 4,

@@ -1,9 +1,9 @@
+import Box from "@/components/Box";
+import Icon from "@/components/Icon";
+import Text from "@/components/Text";
+import { icons } from "lucide-react-native";
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import { icons } from "lucide-react-native";
-import Box from "@/components/Box";
-import Text from "@/components/Text";
-import Icon from "@/components/Icon";
 
 export type LoanReasonType =
   | "homeRepair"
@@ -60,7 +60,7 @@ export default function LoanReasons({
             style={{ width: "30%" }}
           >
             <Box
-              backgroundColor={isSelected ? "buttonPrimary" : "gray100"}
+              backgroundColor={isSelected ? "buttonPrimary" : "tertiary"}
               borderRadius={12}
               padding="m"
               alignItems="center"
@@ -79,8 +79,10 @@ export default function LoanReasons({
                 marginTop="xs"
                 style={{
                   textAlign: "center",
-                  fontFamily: isSelected ? "Quicksand-SemiBold" : "Quicksand-Regular",
-                  color: isSelected ? "#FFFFFF" : undefined,
+                  fontFamily: isSelected
+                    ? "Quicksand-SemiBold"
+                    : "Quicksand-Regular",
+                  color: isSelected ? "#FFFFFF" : "textPrimary",
                 }}
               >
                 {reason.label}
