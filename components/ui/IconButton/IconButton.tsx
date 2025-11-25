@@ -1,13 +1,20 @@
-import React from 'react';
-import { TouchableOpacity, ActivityIndicator } from 'react-native';
-import { useTheme } from '@shopify/restyle';
-import { icons } from 'lucide-react-native';
-import Box from '@/components/Box';
-import Icon from '@/components/Icon';
-import { Theme } from '@/theme';
+import Box from "@/components/Box";
+import Icon from "@/components/Icon";
+import { Theme } from "@/theme";
+import { useTheme } from "@shopify/restyle";
+import { icons } from "lucide-react-native";
+import React from "react";
+import { ActivityIndicator, TouchableOpacity } from "react-native";
 
-type IconButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'danger' | 'warning';
-type IconButtonSize = 'small' | 'medium' | 'large';
+type IconButtonVariant =
+  | "primary"
+  | "secondary"
+  | "tertiary"
+  | "fourty"
+  | "outline"
+  | "danger"
+  | "warning";
+type IconButtonSize = "small" | "medium" | "large";
 
 interface IconButtonProps {
   icon: keyof typeof icons;
@@ -39,38 +46,48 @@ const sizeConfig = {
 const variantConfig: Record<
   IconButtonVariant,
   {
-    backgroundColor: keyof Theme['colors'];
-    iconColor: keyof Theme['colors'];
-    borderColor?: keyof Theme['colors'];
+    backgroundColor: keyof Theme["colors"];
+    iconColor: keyof Theme["colors"];
+    borderColor?: keyof Theme["colors"];
   }
 > = {
   primary: {
-    backgroundColor: 'buttonPrimary',
-    iconColor: 'buttonPrimaryText',
+    backgroundColor: "buttonPrimary",
+    iconColor: "buttonPrimaryText",
   },
   secondary: {
-    backgroundColor: 'buttonSecondary',
-    iconColor: 'buttonSecondaryText',
+    backgroundColor: "buttonSecondary",
+    iconColor: "buttonSecondaryText",
   },
   tertiary: {
-    backgroundColor: 'buttonTertiary',
-    iconColor: 'buttonTertiaryText',
-    borderColor: 'buttonTertiaryText',
+    backgroundColor: "buttonTertiary",
+    iconColor: "buttonTertiaryText",
+    borderColor: "buttonTertiaryText",
+  },
+  fourty: {
+    backgroundColor: "buttonFourty",
+    iconColor: "buttonFourtyText",
+    borderColor: "buttonFourtyBorder",
+  },
+  outline: {
+    backgroundColor: "buttonOutline",
+    iconColor: "buttonOutlineText",
+    borderColor: "buttonOutlineText",
   },
   danger: {
-    backgroundColor: 'buttonDanger',
-    iconColor: 'buttonDangerText',
+    backgroundColor: "buttonDanger",
+    iconColor: "buttonDangerText",
   },
   warning: {
-    backgroundColor: 'buttonWarning',
-    iconColor: 'buttonWarningText',
+    backgroundColor: "buttonWarning",
+    iconColor: "buttonWarningText",
   },
 };
 
 export default function IconButton({
   icon,
-  variant = 'primary',
-  size = 'medium',
+  variant = "primary",
+  size = "medium",
   onPress,
   disabled = false,
   loading = false,
@@ -93,7 +110,7 @@ export default function IconButton({
         alignItems="center"
         justifyContent="center"
         opacity={disabled ? 0.5 : 1}
-        borderWidth={variant === 'tertiary' ? 2 : 0}
+        borderWidth={variant === "fourty" || variant === "outline" ? 2 : 0}
         borderColor={variantStyles.borderColor}
       >
         {loading ? (
@@ -102,7 +119,11 @@ export default function IconButton({
             color={theme.colors[variantStyles.iconColor]}
           />
         ) : (
-          <Icon name={icon} size={sizeStyles.iconSize} color={variantStyles.iconColor} />
+          <Icon
+            name={icon}
+            size={sizeStyles.iconSize}
+            color={variantStyles.iconColor}
+          />
         )}
       </Box>
     </TouchableOpacity>
