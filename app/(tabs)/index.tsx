@@ -5,6 +5,7 @@ import Card from "@/components/ui/Card/Card";
 import HeroCard from "@/components/ui/HeroCard/HeroCard";
 import IconButton from "@/components/ui/IconButton/IconButton";
 import LoanReasons from "@/components/ui/LoanReasons/LoanReasons";
+import LoanRequestBidCard from "@/components/ui/LoanRequestBidCard/LoanRequestBidCard";
 import ProgressBar from "@/components/ui/ProgressBar/ProgressBar";
 import Score from "@/components/ui/Score/Score";
 import Select from "@/components/ui/Select/Select";
@@ -119,6 +120,36 @@ export default function HomeScreen() {
               paymentPeriodMonths={2}
               validThrough="Jul 15, 2025"
               onAccept={() => console.log("Accepted offer")}
+            />
+          </Box>
+
+          <Text variant="header" marginTop="xl" marginBottom="l">
+            LoanRequestBidCard
+          </Text>
+
+          <Box gap="m" marginBottom="xl">
+            <LoanRequestBidCard
+              amountRequested={5000}
+              loanReason="medical"
+              userScore={85}
+              numberOfPayments={12}
+              onPlaceBid={() => console.log("Bid placed on medical loan")}
+            />
+
+            <LoanRequestBidCard
+              amountRequested={3500}
+              loanReason="homeRepair"
+              userScore={72}
+              numberOfPayments={6}
+              onPlaceBid={() => console.log("Bid placed on home repair loan")}
+            />
+
+            <LoanRequestBidCard
+              amountRequested={8000}
+              loanReason="education"
+              userScore={95}
+              numberOfPayments={24}
+              onPlaceBid={() => console.log("Bid placed on education loan")}
             />
           </Box>
 
