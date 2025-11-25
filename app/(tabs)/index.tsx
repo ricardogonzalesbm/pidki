@@ -7,6 +7,7 @@ import LoanReasons from "@/components/ui/LoanReasons/LoanReasons";
 import Score from "@/components/ui/Score/Score";
 import Select from "@/components/ui/Select/Select";
 import ProgressBar from "@/components/ui/ProgressBar/ProgressBar";
+import HeroCard from "@/components/ui/HeroCard/HeroCard";
 import { useState } from "react";
 import { ScrollView } from "react-native";
 
@@ -32,33 +33,91 @@ export default function HomeScreen() {
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      <Box flex={1} backgroundColor="mainBackground" padding="m">
-        <Text variant="header" marginTop="l" marginBottom="l">
-          Card
+      <Box flex={1} backgroundColor="mainBackground">
+        <Text variant="header" marginTop="l" marginBottom="l" paddingHorizontal="m">
+          HeroCard
         </Text>
 
-        <Box gap="m" marginBottom="xl">
-          <Card
-            totalPayback={1000}
-            interestRate={10}
-            monthlyPayment={500}
-            paymentPeriodMonths={2}
-            validThrough="Jul 8, 2025"
-            badgeText="New"
-            onAccept={() => console.log("Accepted offer")}
+        <Box gap="xl" marginBottom="xl">
+          <HeroCard
+            variant="A"
+            icon="Rocket"
+            title="Welcome to Pidki"
+            description="Get instant loans with competitive rates and flexible payment terms"
+            ctaText="Get Started"
+            onCtaPress={() => console.log("Hero A pressed")}
           />
 
-          <Card
-            totalPayback={2000}
-            interestRate={8.5}
-            monthlyPayment={1000}
-            paymentPeriodMonths={2}
-            validThrough="Jul 15, 2025"
-            onAccept={() => console.log("Accepted offer")}
+          <HeroCard
+            variant="B"
+            description="Experience the fastest loan approval process in the market"
+            ctaText="Learn More"
+            onCtaPress={() => console.log("Hero B pressed")}
+          />
+
+          <HeroCard
+            variant="C"
+            title="Your Financial Partner"
+            description="We're here to help you achieve your financial goals with smart lending solutions"
+            ctaText="Explore Options"
+            onCtaPress={() => console.log("Hero C pressed")}
+          />
+
+          <HeroCard
+            variant="D"
+            emoji="💰"
+            title="Quick Cash"
+            description="Get approved in minutes and receive funds in your account today"
+            ctaText="Apply Now"
+            onCtaPress={() => console.log("Hero D pressed")}
+          />
+
+          <HeroCard
+            variant="E"
+            icon="BadgeCheck"
+            title="Verified & Secure"
+            description="Bank-level security to protect your personal and financial information"
+            ctaText="View Details"
+            onCtaPress={() => console.log("Hero E pressed")}
+          />
+
+          <HeroCard
+            variant="F"
+            description="Complete your profile"
+            title="Almost There!"
+            progress={65}
+            ctaText="Continue"
+            onCtaPress={() => console.log("Hero F pressed")}
           />
         </Box>
 
-        <Text variant="subheader" marginTop="l" marginBottom="m">
+        <Box paddingHorizontal="m">
+          <Text variant="header" marginTop="l" marginBottom="l">
+            Card
+          </Text>
+
+          <Box gap="m" marginBottom="xl">
+            <Card
+              totalPayback={1000}
+              interestRate={10}
+              monthlyPayment={500}
+              paymentPeriodMonths={2}
+              validThrough="Jul 8, 2025"
+              badgeText="New"
+              onAccept={() => console.log("Accepted offer")}
+            />
+
+            <Card
+              totalPayback={2000}
+              interestRate={8.5}
+              monthlyPayment={1000}
+              paymentPeriodMonths={2}
+              validThrough="Jul 15, 2025"
+              onAccept={() => console.log("Accepted offer")}
+            />
+          </Box>
+
+          <Text variant="subheader" marginTop="l" marginBottom="m">
           Variants
         </Text>
         <Box gap="m">
@@ -298,6 +357,7 @@ export default function HomeScreen() {
             onPress={() => console.log("Loading")}
           />
         </Box>
+      </Box>
       </Box>
     </ScrollView>
   );
