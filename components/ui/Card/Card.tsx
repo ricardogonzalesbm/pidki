@@ -45,7 +45,7 @@ export default function Card({
             variant="caption"
             style={{
               color: "#FFFFFF",
-              fontWeight: "600",
+              fontFamily: "Quicksand-SemiBold",
               fontSize: 12,
               textTransform: "uppercase",
             }}
@@ -69,7 +69,7 @@ export default function Card({
               variant="header"
               style={{
                 fontSize: 28,
-                fontWeight: "bold",
+                fontFamily: "Quicksand-Bold",
               }}
             >
               S/{" "}
@@ -90,7 +90,7 @@ export default function Card({
               variant="subheader"
               style={{
                 fontSize: 24,
-                fontWeight: "600",
+                fontFamily: "Quicksand-SemiBold",
                 color: "#2DD4BF",
               }}
             >
@@ -111,7 +111,7 @@ export default function Card({
         >
           <Text variant="body" style={{ lineHeight: 22 }}>
             You'll payback{" "}
-            <Text variant="body" style={{ fontWeight: "bold" }}>
+            <Text variant="body" style={{ fontFamily: "Quicksand-Bold" }}>
               S/{" "}
               {monthlyPayment.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
@@ -119,7 +119,7 @@ export default function Card({
               })}
             </Text>{" "}
             every month. Your loan will be paid off in{" "}
-            <Text variant="body" style={{ fontWeight: "bold" }}>
+            <Text variant="body" style={{ fontFamily: "Quicksand-Bold" }}>
               {paymentPeriodMonths}{" "}
               {paymentPeriodMonths === 1 ? "month" : "months"}
             </Text>

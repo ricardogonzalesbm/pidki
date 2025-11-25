@@ -60,20 +60,22 @@ const theme = createTheme({
   textVariants: {
     header: {
       fontSize: 32,
-      fontWeight: 'bold',
+      fontFamily: 'Quicksand-Bold',
       color: 'textPrimary',
     },
     subheader: {
       fontSize: 24,
-      fontWeight: '600',
+      fontFamily: 'Quicksand-SemiBold',
       color: 'textPrimary',
     },
     body: {
       fontSize: 16,
+      fontFamily: 'Quicksand-Regular',
       color: 'textPrimary',
     },
     caption: {
       fontSize: 14,
+      fontFamily: 'Quicksand-Regular',
       color: 'textSecondary',
     },
   },

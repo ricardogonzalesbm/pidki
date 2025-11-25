@@ -136,7 +136,7 @@ export default function Button({
           variant="body"
           style={{
             fontSize: sizeStyles.fontSize,
-            fontWeight: '600',
+            fontFamily: 'Quicksand-SemiBold',
             color: theme.colors[variantStyles.textColor],
           }}
         >

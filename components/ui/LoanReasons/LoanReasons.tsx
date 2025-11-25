@@ -79,7 +79,7 @@ export default function LoanReasons({
                 marginTop="xs"
                 style={{
                   textAlign: "center",
-                  fontWeight: isSelected ? "600" : "400",
+                  fontFamily: isSelected ? "Quicksand-SemiBold" : "Quicksand-Regular",
                   color: isSelected ? "#FFFFFF" : undefined,
                 }}
               >

@@ -32,7 +32,7 @@ export default function Score({ score }: ScoreProps) {
         <Text
           variant="subheader"
           style={{
-            fontWeight: "bold",
+            fontFamily: "Quicksand-Bold",
             fontSize: 20,
             color: theme.colors.buttonPrimaryText,
           }}
@@ -54,7 +54,7 @@ export default function Score({ score }: ScoreProps) {
           variant="header"
           style={{
             fontSize: 36,
-            fontWeight: "bold",
+            fontFamily: "Quicksand-Bold",
             color: theme.colors.buttonPrimary,
           }}
         >

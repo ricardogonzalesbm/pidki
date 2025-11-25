@@ -77,7 +77,7 @@ export default function Select({
     <>
       <Box>
         {label && (
-          <Text variant="body" marginBottom="xs" style={{ fontWeight: "400" }}>
+          <Text variant="body" marginBottom="xs" style={{ fontFamily: "Quicksand-Regular" }}>
             {label}
           </Text>
         )}
@@ -96,7 +96,7 @@ export default function Select({
             <Text
               variant="body"
               style={{
-                fontWeight: "600",
+                fontFamily: "Quicksand-SemiBold",
                 color: selectedOption
                   ? theme.colors.buttonPrimary
                   : theme.colors.primary,
@@ -155,7 +155,7 @@ export default function Select({
               <Text
                 variant="subheader"
                 marginBottom="m"
-                style={{ fontWeight: "600" }}
+                style={{ fontFamily: "Quicksand-SemiBold" }}
               >
                 {label || "Seleccionar opción"}
               </Text>
@@ -186,7 +186,7 @@ export default function Select({
                         <Text
                           variant="body"
                           style={{
-                            fontWeight: "600",
+                            fontFamily: "Quicksand-SemiBold",
                             color: isSelected
                               ? theme.colors.buttonPrimaryText
                               : theme.colors.buttonPrimary,

@@ -48,14 +48,14 @@ export default function ProgressBar({
           marginBottom="xs"
         >
           {label && (
-            <Text variant="body" style={{ fontWeight: "600" }}>
+            <Text variant="body" style={{ fontFamily: "Quicksand-SemiBold" }}>
               {label}
             </Text>
           )}
           {showPercentage && (
             <Text
               variant="body"
-              style={{ fontWeight: "600", color: theme.colors.buttonPrimary }}
+              style={{ fontFamily: "Quicksand-SemiBold", color: theme.colors.buttonPrimary }}
             >
               {Math.round(clampedProgress)}%
             </Text>
