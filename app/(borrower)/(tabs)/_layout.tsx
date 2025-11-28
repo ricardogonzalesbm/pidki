@@ -1,13 +1,57 @@
 import { Tabs } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { Platform } from 'react-native';
 
 export default function BorrowerTabsLayout() {
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: '#FFFFFF',
+        tabBarInactiveTintColor: '#9CA3AF',
+        tabBarStyle: {
+          position: 'absolute',
+          bottom: 25,
+          elevation: 0,
+          backgroundColor: 'rgba(24, 35, 58, 0.9)',
+          borderRadius: 30,
+          height: 70,
+          paddingBottom: 10,
+          paddingTop: 10,
+          borderTopWidth: 0,
+          ...Platform.select({
+            ios: {
+              backgroundColor: 'rgba(24, 35, 58, 0.9)',
+              left: 20,
+              right: 20,
+              marginHorizontal: 20,
+            },
+            android: {
+              backgroundColor: 'rgba(24, 35, 58, 0.95)',
+              left: 20,
+              right: 20,
+              marginHorizontal: 20,
+            },
+            web: {
+              left: 35,
+              right: 35,
+            },
+          }),
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontFamily: 'Quicksand-Medium',
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
           tabBarLabel: 'Home',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -15,6 +59,9 @@ export default function BorrowerTabsLayout() {
         options={{
           title: 'Loan',
           tabBarLabel: 'Loan',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="cash" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -22,6 +69,9 @@ export default function BorrowerTabsLayout() {
         options={{
           title: 'Wallet',
           tabBarLabel: 'Wallet',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="wallet" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -29,6 +79,9 @@ export default function BorrowerTabsLayout() {
         options={{
           title: 'Support',
           tabBarLabel: 'Support',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="help-circle" size={size} color={color} />
+          ),
         }}
       />
     </Tabs>
