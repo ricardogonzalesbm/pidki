@@ -10,10 +10,6 @@ import theme from '@/theme';
 
 SplashScreen.preventAutoHideAsync();
 
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
-
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
     'Quicksand-Regular': require('../assets/fonts/Quicksand/Quicksand-Regular.ttf'),
@@ -35,8 +31,12 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(borrower)" />
+        <Stack.Screen name="(lender)" />
+        <Stack.Screen name="profile-settings" />
+        <Stack.Screen name="(aux)" />
         <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
       </Stack>
       <StatusBar style="auto" />
