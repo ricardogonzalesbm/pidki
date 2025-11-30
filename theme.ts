@@ -26,7 +26,7 @@ const palette = {
 
 const theme = createTheme({
   colors: {
-    mainBackground: palette.white,
+    mainBackground: palette.gray100,
     mainForeground: palette.black,
     cardPrimaryBackground: palette.primary,
     cardSecondaryBackground: palette.secondary,
@@ -105,6 +105,11 @@ const theme = createTheme({
       fontFamily: 'Quicksand-Regular',
       color: 'textSecondary',
     },
+    danger: {
+      fontSize: 16,
+      fontFamily: 'Quicksand-Regular',
+      color: 'danger',
+    }
   },
   cardVariants: {
     defaults: {

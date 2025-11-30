@@ -53,7 +53,7 @@ export default function LoanRequestBidCard({
 
   return (
     <Box
-      backgroundColor="mainBackground"
+      backgroundColor="white"
       borderRadius={16}
       borderWidth={1}
       borderColor="border"
@@ -130,10 +130,10 @@ export default function LoanRequestBidCard({
                 justifyContent="center"
               >
                 <Text
-                  variant="body"
+                  variant="danger"
                   style={{
                     fontFamily: "Quicksand-Bold",
-                    color: theme.colors.textPrimary,
+                    color: theme.colors.danger,
                   }}
                 >
                   {userScore}

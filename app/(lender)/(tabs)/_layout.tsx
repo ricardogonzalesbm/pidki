@@ -13,7 +13,7 @@ export default function LenderTabsLayout() {
           position: "absolute",
           bottom: 25,
           elevation: 0,
-          backgroundColor: "rgba(24, 35, 58, 0.9)",
+          backgroundColor: "rgba(24, 35, 58, 0.85)",
           borderRadius: 30,
           height: 70,
           paddingBottom: 10,
