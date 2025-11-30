@@ -16,6 +16,7 @@ interface TextFieldProps extends Omit<TextInputProps, "placeholderTextColor"> {
   icon?: keyof typeof icons;
   secureTextEntry?: boolean;
   disabled?: boolean;
+  variant?: "default" | "transparent";
 }
 
 export default function TextField({
@@ -27,6 +28,7 @@ export default function TextField({
   icon,
   secureTextEntry = false,
   disabled = false,
+  variant = "default",
   ...textInputProps
 }: TextFieldProps) {
   const theme = useTheme<Theme>();
@@ -35,6 +37,7 @@ export default function TextField({
 
   const hasError = !!error;
   const isPassword = secureTextEntry;
+  const isTransparent = variant === "transparent";
 
   return (
     <Box marginBottom="m">
@@ -43,8 +46,12 @@ export default function TextField({
           variant="body"
           marginBottom="s"
           style={{
-            fontFamily: "PlusJakartaSans-SemiBold",
-            color: hasError ? theme.colors.red600 : theme.colors.textPrimary,
+            fontFamily: "PlusJakartaSans-Medium",
+            color: hasError
+              ? theme.colors.red600
+              : isTransparent
+              ? theme.colors.tertiary
+              : theme.colors.textPrimary,
           }}
         >
           {label}
@@ -54,22 +61,26 @@ export default function TextField({
       <Box
         flexDirection="row"
         alignItems="center"
-        backgroundColor="white"
-        borderWidth={2}
-        borderColor={hasError ? "red600" : isFocused ? "primary" : "border"}
+        borderWidth={1}
         borderRadius={12}
         paddingHorizontal="m"
         paddingVertical="m"
         opacity={disabled ? 0.6 : 1}
+        style={{
+          backgroundColor: isTransparent ? "#1f2c4a" : "#FFFFFF",
+          borderColor: hasError
+            ? theme.colors.red600
+            : isFocused
+            ? theme.colors.cyan
+            : "rgba(102, 123, 171, 0.5)",
+        }}
       >
         {icon && (
           <Box marginRight="s">
             <Icon
               name={icon}
               size={20}
-              color={
-                hasError ? "red600" : isFocused ? "primary" : "textSecondary"
-              }
+              color={hasError ? "red600" : isFocused ? "cyan" : "secondary"}
             />
           </Box>
         )}
@@ -79,7 +90,9 @@ export default function TextField({
             value={value}
             onChangeText={onChangeText}
             placeholder={placeholder}
-            placeholderTextColor={theme.colors.gray400}
+            placeholderTextColor={
+              isTransparent ? theme.colors.secondary : theme.colors.gray400
+            }
             secureTextEntry={isPassword && !isPasswordVisible}
             editable={!disabled}
             onFocus={() => setIsFocused(true)}
@@ -87,7 +100,9 @@ export default function TextField({
             style={{
               fontFamily: "PlusJakartaSans-Regular",
               fontSize: 16,
-              color: theme.colors.textPrimary,
+              color: isTransparent
+                ? theme.colors.tertiary
+                : theme.colors.textPrimary,
               padding: 0,
               margin: 0,
             }}
@@ -104,7 +119,7 @@ export default function TextField({
             <Icon
               name={isPasswordVisible ? "EyeOff" : "Eye"}
               size={20}
-              color={isFocused ? "primary" : "textSecondary"}
+              color={isFocused ? "cyan" : "secondary"}
             />
           </TouchableOpacity>
         )}

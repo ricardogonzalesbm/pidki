@@ -1,4 +1,3 @@
-import SignUpPixelArt from "@/assets/images/SignUpPixelArt";
 import Box from "@/components/Box";
 import Text from "@/components/Text";
 import Button from "@/components/ui/Button/Button";
@@ -112,171 +111,158 @@ export default function SignUpScreen() {
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
       >
-        <Box flex={1} backgroundColor="mainBackground">
-          {/* Pixel Art Illustration with White Background */}
-          <Box
-            backgroundColor="primary"
-            paddingVertical="xl"
-            alignItems="center"
-          >
-            <SignUpPixelArt width={240} height={180} />
-          </Box>
-
-          {/* Form Section with Primary Background */}
-          <Box
-            flex={1}
-            backgroundColor="white"
-            padding="l"
-            style={{
-              borderTopLeftRadius: 24,
-              borderTopRightRadius: 24,
-              marginTop: -20,
-            }}
-          >
-            {/* Header */}
-            <Text variant="header" marginBottom="s" color="primary">
+        <Box flex={1} backgroundColor="primary" padding="l" justifyContent="center">
+          {/* Header */}
+          <Box width="100%" paddingBottom="xl" paddingTop="xl">
+            <Text
+              variant="header"
+              style={{
+                fontSize: 30,
+                fontFamily: "PlusJakartaSans-Bold",
+                color: "#bdcae7",
+                letterSpacing: -0.5,
+                marginBottom: 8,
+              }}
+            >
               Crear Cuenta
             </Text>
             <Text
               variant="body"
-              color="primary"
-              marginBottom="l"
-              style={{ opacity: 0.8 }}
+              style={{
+                fontSize: 16,
+                fontFamily: "PlusJakartaSans-Regular",
+                color: "#667bab",
+                marginBottom: 16,
+              }}
             >
               Únete a Pidki y comienza a conectar
             </Text>
+          </Box>
 
-            {/* Name Field */}
-            <TextField
-              label="Nombre"
-              placeholder="Ingresa tu nombre completo"
-              value={name}
-              onChangeText={(text) => {
-                setName(text);
-                if (nameError) validateField("name", text);
-              }}
-              onBlur={() => validateField("name", name)}
-              error={nameError}
-              icon="User"
-              autoCapitalize="words"
-              autoComplete="name"
-            />
+          {/* Name Field */}
+          <TextField
+            label="Nombre Completo"
+            placeholder="Ingresa tu nombre completo"
+            value={name}
+            onChangeText={(text) => {
+              setName(text);
+              if (nameError) validateField("name", text);
+            }}
+            onBlur={() => validateField("name", name)}
+            error={nameError}
+            autoCapitalize="words"
+            autoComplete="name"
+            variant="transparent"
+          />
 
-            {/* Email Field */}
-            <TextField
-              label="Email"
-              placeholder="Ingresa tu email"
-              value={email}
-              onChangeText={(text) => {
-                setEmail(text);
-                if (emailError) validateField("email", text);
-              }}
-              onBlur={() => validateField("email", email)}
-              error={emailError}
-              icon="Mail"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoComplete="email"
-            />
+          {/* Email Field */}
+          <TextField
+            label="Email"
+            placeholder="Ingresa tu email"
+            value={email}
+            onChangeText={(text) => {
+              setEmail(text);
+              if (emailError) validateField("email", text);
+            }}
+            onBlur={() => validateField("email", email)}
+            error={emailError}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoComplete="email"
+            variant="transparent"
+          />
 
-            {/* Password Field */}
-            <TextField
-              label="Contraseña"
-              placeholder="Crea una contraseña"
-              value={password}
-              onChangeText={(text) => {
-                setPassword(text);
-                if (passwordError) validateField("password", text);
-                if (confirmPassword) validateField("confirmPassword", confirmPassword);
-              }}
-              onBlur={() => validateField("password", password)}
-              error={passwordError}
-              icon="Lock"
-              secureTextEntry
-              autoCapitalize="none"
-            />
+          {/* Password Field */}
+          <TextField
+            label="Contraseña"
+            placeholder="Crea una contraseña"
+            value={password}
+            onChangeText={(text) => {
+              setPassword(text);
+              if (passwordError) validateField("password", text);
+              if (confirmPassword) validateField("confirmPassword", confirmPassword);
+            }}
+            onBlur={() => validateField("password", password)}
+            error={passwordError}
+            secureTextEntry
+            autoCapitalize="none"
+            variant="transparent"
+          />
 
-            {/* Confirm Password Field */}
-            <TextField
-              label="Confirmar Contraseña"
-              placeholder="Confirma tu contraseña"
-              value={confirmPassword}
-              onChangeText={(text) => {
-                setConfirmPassword(text);
-                if (confirmPasswordError) validateField("confirmPassword", text);
-              }}
-              onBlur={() => validateField("confirmPassword", confirmPassword)}
-              error={confirmPasswordError}
-              icon="Lock"
-              secureTextEntry
-              autoCapitalize="none"
-            />
+          {/* Confirm Password Field */}
+          <TextField
+            label="Confirmar Contraseña"
+            placeholder="Confirma tu contraseña"
+            value={confirmPassword}
+            onChangeText={(text) => {
+              setConfirmPassword(text);
+              if (confirmPasswordError) validateField("confirmPassword", text);
+            }}
+            onBlur={() => validateField("confirmPassword", confirmPassword)}
+            error={confirmPasswordError}
+            secureTextEntry
+            autoCapitalize="none"
+            variant="transparent"
+          />
 
-            {/* Sign Up Button */}
-            <Box marginTop="m">
-              <Button
-                variant="tertiary"
-                size="large"
-                fullWidth
-                onPress={handleSignUp}
-                loading={loading}
-                disabled={loading || !name || !email || !password || !confirmPassword}
-              >
-                Crear Cuenta
-              </Button>
-            </Box>
-
-            {/* Divider */}
-            <Box flexDirection="row" alignItems="center" marginVertical="l">
-              <Box flex={1} height={1} backgroundColor="border" />
-              <Text
-                variant="caption"
-                marginHorizontal="m"
-                color="textSecondary"
-              >
-                o regístrate con
-              </Text>
-              <Box flex={1} height={1} backgroundColor="border" />
-            </Box>
-
-            {/* Social Auth Buttons */}
-            <Box flexDirection="row" justifyContent="center" gap="l">
-              <SocialAuthButton
-                provider="google"
-                onPress={handleGoogleSignUp}
-                variant="circle"
-              />
-              <SocialAuthButton
-                provider="apple"
-                onPress={handleAppleSignUp}
-                variant="circle"
-              />
-              <SocialAuthButton
-                provider="facebook"
-                onPress={handleFacebookSignUp}
-                variant="circle"
-              />
-            </Box>
-
-            {/* Sign In Link */}
-            <Box
-              flexDirection="row"
-              justifyContent="center"
-              marginTop="xl"
-              marginBottom="l"
+          {/* Sign Up Button */}
+          <Box marginTop="m" marginBottom="m">
+            <Button
+              variant="cyan"
+              size="large"
+              fullWidth
+              onPress={handleSignUp}
+              loading={loading}
+              disabled={loading || !name || !email || !password || !confirmPassword}
             >
-              <Text variant="body" color="white" style={{ opacity: 0.8, fontFamily: "PlusJakartaSans-Regular" }}>
-                ¿Ya tienes cuenta?{" "}
-              </Text>
-              <Text
-                variant="body"
-                color="white"
-                style={{ fontFamily: "PlusJakartaSans-SemiBold" }}
-                onPress={() => router.push("/(auth)/sign-in")}
-              >
-                Iniciar Sesión
-              </Text>
-            </Box>
+              Crear Cuenta
+            </Button>
+          </Box>
+
+          {/* Divider */}
+          <Box flexDirection="row" alignItems="center" marginVertical="m">
+            <Box flex={1} height={1} style={{ backgroundColor: "rgba(102, 123, 171, 0.5)" }} />
+            <Text
+              variant="caption"
+              marginHorizontal="m"
+              style={{ color: "#667bab", fontSize: 14 }}
+            >
+              o regístrate con
+            </Text>
+            <Box flex={1} height={1} style={{ backgroundColor: "rgba(102, 123, 171, 0.5)" }} />
+          </Box>
+
+          {/* Social Auth Buttons */}
+          <Box gap="m" marginBottom="m">
+            <SocialAuthButton
+              provider="google"
+              onPress={handleGoogleSignUp}
+            />
+            <SocialAuthButton
+              provider="apple"
+              onPress={handleAppleSignUp}
+            />
+          </Box>
+
+          <Box flex={1} />
+
+          {/* Sign In Link */}
+          <Box
+            flexDirection="row"
+            justifyContent="center"
+            paddingTop="xl"
+            paddingBottom="m"
+          >
+            <Text variant="body" style={{ color: "#667bab", fontSize: 14, fontFamily: "PlusJakartaSans-Regular" }}>
+              ¿Ya tienes cuenta?{" "}
+            </Text>
+            <Text
+              variant="body"
+              style={{ color: "#00FFFF", fontSize: 14, fontFamily: "PlusJakartaSans-Bold" }}
+              onPress={() => router.push("/(auth)/sign-in")}
+            >
+              Iniciar Sesión
+            </Text>
           </Box>
         </Box>
       </ScrollView>

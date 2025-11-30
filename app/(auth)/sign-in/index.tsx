@@ -1,4 +1,3 @@
-import SignInPixelArt from "@/assets/images/SignInPixelArt";
 import Box from "@/components/Box";
 import Text from "@/components/Text";
 import Button from "@/components/ui/Button/Button";
@@ -87,85 +86,80 @@ export default function SignInScreen() {
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
       >
-        <Box flex={1} backgroundColor="mainBackground">
-          {/* Pixel Art Illustration with White Background */}
-          <Box
-            backgroundColor="primary"
-            paddingVertical="xl"
-            alignItems="center"
-          >
-            <SignInPixelArt width={240} height={180} />
-          </Box>
-
-          {/* Form Section with Primary Background */}
-          <Box
-            flex={1}
-            backgroundColor="primary"
-            padding="l"
-            style={{
-              borderTopLeftRadius: 24,
-              borderTopRightRadius: 24,
-              marginTop: -20,
-            }}
-          >
-            {/* Header */}
-            <Text variant="header" marginBottom="s" color="primary">
-              Bienvenido
+        <Box flex={1} backgroundColor="primary" padding="l" justifyContent="center">
+          {/* Header */}
+          <Box width="100%" paddingBottom="xl" paddingTop="xl">
+            <Text
+              variant="header"
+              style={{
+                fontSize: 30,
+                fontFamily: "PlusJakartaSans-Bold",
+                color: "#bdcae7",
+                letterSpacing: -0.5,
+                marginBottom: 8,
+              }}
+            >
+              Bienvenido de nuevo
             </Text>
             <Text
               variant="body"
-              color="secondary"
-              marginBottom="xl"
-              style={{ opacity: 0.8 }}
+              style={{
+                fontSize: 16,
+                fontFamily: "PlusJakartaSans-Regular",
+                color: "#667bab",
+                marginBottom: 16,
+              }}
             >
-              Inicia sesión para continuar en Pidki
+              Inicia sesión para continuar
             </Text>
+          </Box>
 
-            {/* Email Field */}
-            <TextField
-              label="Email"
-              placeholder="Ingresa tu email"
-              value={email}
-              onChangeText={(text) => {
-                setEmail(text);
-                if (emailError) validateField("email", text);
-              }}
-              onBlur={() => validateField("email", email)}
-              error={emailError}
-              icon="Mail"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoComplete="email"
-            />
+          {/* Email Field */}
+          <TextField
+            label="Email"
+            placeholder="Ingresa tu email"
+            value={email}
+            onChangeText={(text) => {
+              setEmail(text);
+              if (emailError) validateField("email", text);
+            }}
+            onBlur={() => validateField("email", email)}
+            error={emailError}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoComplete="email"
+            variant="transparent"
+          />
 
-            {/* Password Field */}
-            <TextField
-              label="Contraseña"
-              placeholder="Ingresa tu contraseña"
-              value={password}
-              onChangeText={(text) => {
-                setPassword(text);
-                if (passwordError) validateField("password", text);
-              }}
-              onBlur={() => validateField("password", password)}
-              error={passwordError}
-              icon="Lock"
-              secureTextEntry
-              autoCapitalize="none"
-            />
+          {/* Password Field */}
+          <TextField
+            label="Contraseña"
+            placeholder="Ingresa tu contraseña"
+            value={password}
+            onChangeText={(text) => {
+              setPassword(text);
+              if (passwordError) validateField("password", text);
+            }}
+            onBlur={() => validateField("password", password)}
+            error={passwordError}
+            secureTextEntry
+            autoCapitalize="none"
+            variant="transparent"
+          />
 
-            {/* Forgot Password Link */}
-            <Box alignItems="flex-end" marginBottom="l">
-              <Text
-                variant="body"
-                color="cyan"
-                style={{ fontFamily: "PlusJakartaSans-Medium" }}
-              >
-                ¿Olvidaste tu contraseña?
-              </Text>
-            </Box>
+          {/* Forgot Password Link */}
+          <Box alignItems="flex-end" marginTop="s" marginBottom="l">
+            <Text
+              variant="body"
+              color="cyan"
+              style={{ fontFamily: "PlusJakartaSans-Medium", fontSize: 14 }}
+            >
+              ¿Olvidaste tu contraseña?
+            </Text>
+          </Box>
 
-            {/* Sign In Button */}
+          {/* Sign In Button */}
+          <Box marginBottom="m">
             <Button
               variant="cyan"
               size="large"
@@ -176,58 +170,52 @@ export default function SignInScreen() {
             >
               Iniciar Sesión
             </Button>
+          </Box>
 
-            {/* Divider */}
-            <Box flexDirection="row" alignItems="center" marginVertical="l">
-              <Box flex={1} height={1} backgroundColor="border" />
-              <Text
-                variant="caption"
-                marginHorizontal="m"
-                color="textSecondary"
-              >
-                o continuar con
-              </Text>
-              <Box flex={1} height={1} backgroundColor="border" />
-            </Box>
-
-            {/* Social Auth Buttons */}
-            <Box flexDirection="row" justifyContent="center" gap="l">
-              <SocialAuthButton
-                provider="google"
-                onPress={handleGoogleSignIn}
-                variant="circle"
-              />
-              <SocialAuthButton
-                provider="apple"
-                onPress={handleAppleSignIn}
-                variant="circle"
-              />
-              <SocialAuthButton
-                provider="facebook"
-                onPress={handleFacebookSignIn}
-                variant="circle"
-              />
-            </Box>
-
-            {/* Sign Up Link */}
-            <Box
-              flexDirection="row"
-              justifyContent="center"
-              marginTop="xl"
-              marginBottom="l"
+          {/* Divider */}
+          <Box flexDirection="row" alignItems="center" marginVertical="m">
+            <Box flex={1} height={1} style={{ backgroundColor: "rgba(102, 123, 171, 0.5)" }} />
+            <Text
+              variant="caption"
+              marginHorizontal="m"
+              style={{ color: "#667bab", fontSize: 14 }}
             >
-              <Text variant="body" color="white" style={{ opacity: 0.8, fontFamily: "PlusJakartaSans-Regular" }}>
-                ¿No tienes cuenta?{" "}
-              </Text>
-              <Text
-                variant="body"
-                color="white"
-                style={{ fontFamily: "PlusJakartaSans-SemiBold" }}
-                onPress={() => router.push("/(auth)/sign-up")}
-              >
-                Regístrate
-              </Text>
-            </Box>
+              o continuar con
+            </Text>
+            <Box flex={1} height={1} style={{ backgroundColor: "rgba(102, 123, 171, 0.5)" }} />
+          </Box>
+
+          {/* Social Auth Buttons */}
+          <Box gap="m" marginBottom="m">
+            <SocialAuthButton
+              provider="google"
+              onPress={handleGoogleSignIn}
+            />
+            <SocialAuthButton
+              provider="apple"
+              onPress={handleAppleSignIn}
+            />
+          </Box>
+
+          <Box flex={1} />
+
+          {/* Sign Up Link */}
+          <Box
+            flexDirection="row"
+            justifyContent="center"
+            paddingTop="xl"
+            paddingBottom="m"
+          >
+            <Text variant="body" style={{ color: "#667bab", fontSize: 14, fontFamily: "PlusJakartaSans-Regular" }}>
+              ¿No tienes cuenta?{" "}
+            </Text>
+            <Text
+              variant="body"
+              style={{ color: "#00FFFF", fontSize: 14, fontFamily: "PlusJakartaSans-Bold" }}
+              onPress={() => router.push("/(auth)/sign-up")}
+            >
+              Regístrate
+            </Text>
           </Box>
         </Box>
       </ScrollView>

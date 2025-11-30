@@ -23,15 +23,15 @@ const providerConfig: Record<
   }
 > = {
   google: {
-    label: "Continue with Google",
-    backgroundColor: "#FFFFFF",
-    textColor: "#1F2937",
+    label: "Sign in with Google",
+    backgroundColor: "transparent",
+    textColor: "#bdcae7",
     hasBorder: true,
   },
   apple: {
-    label: "Continue with Apple",
-    backgroundColor: "#000000",
-    textColor: "#FFFFFF",
+    label: "Sign in with Apple",
+    backgroundColor: "#FFFFFF",
+    textColor: "#000000",
     hasBorder: false,
   },
   facebook: {
@@ -140,7 +140,6 @@ export default function SocialAuthButton({
       style={{ width: "100%" }}
     >
       <Box
-        backgroundColor="white"
         paddingVertical="m"
         paddingHorizontal="l"
         borderRadius={12}
@@ -148,10 +147,11 @@ export default function SocialAuthButton({
         alignItems="center"
         justifyContent="center"
         opacity={disabled ? 0.5 : 1}
-        borderWidth={config.hasBorder ? 2 : 0}
-        borderColor={config.hasBorder ? "gray200" : undefined}
         style={{
           backgroundColor: config.backgroundColor,
+          borderWidth: config.hasBorder ? 2 : 0,
+          borderColor: config.hasBorder ? "rgba(102, 123, 171, 0.5)" : "transparent",
+          height: 56,
         }}
       >
         <Box marginRight="m">{renderIcon()}</Box>
@@ -159,7 +159,7 @@ export default function SocialAuthButton({
           variant="body"
           style={{
             fontSize: 16,
-            fontFamily: "Quicksand-SemiBold",
+            fontFamily: "PlusJakartaSans-SemiBold",
             color: config.textColor,
           }}
         >
