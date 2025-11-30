@@ -17,6 +17,13 @@ export default function RootLayout() {
     'Quicksand-Medium': require('../assets/fonts/Quicksand/Quicksand-Medium.ttf'),
     'Quicksand-SemiBold': require('../assets/fonts/Quicksand/Quicksand-SemiBold.ttf'),
     'Quicksand-Bold': require('../assets/fonts/Quicksand/Quicksand-Bold.ttf'),
+    'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans/PlusJakartaSans-Regular.ttf'),
+    'PlusJakartaSans-Light': require('../assets/fonts/PlusJakartaSans/PlusJakartaSans-Light.ttf'),
+    'PlusJakartaSans-Medium': require('../assets/fonts/PlusJakartaSans/PlusJakartaSans-Medium.ttf'),
+    'PlusJakartaSans-SemiBold': require('../assets/fonts/PlusJakartaSans/PlusJakartaSans-SemiBold.ttf'),
+    'PlusJakartaSans-Bold': require('../assets/fonts/PlusJakartaSans/PlusJakartaSans-Bold.ttf'),
+    'PlusJakartaSans-ExtraLight': require('../assets/fonts/PlusJakartaSans/PlusJakartaSans-ExtraLight.ttf'),
+    'PlusJakartaSans-ExtraBold': require('../assets/fonts/PlusJakartaSans/PlusJakartaSans-ExtraBold.ttf'),
   });
 
   useEffect(() => {

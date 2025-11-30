@@ -14,6 +14,7 @@ type ButtonVariant =
   | "fourty"
   | "outline"
   | "danger"
+  | "cyan"
   | "warning";
 type ButtonSize = "small" | "medium" | "large";
 type IconPosition = "left" | "right";
@@ -90,6 +91,10 @@ const variantConfig: Record<
     backgroundColor: "buttonWarning",
     textColor: "buttonWarningText",
   },
+  cyan: {
+    backgroundColor: "buttonCyan",
+    textColor: "buttonCyanText",
+  },
 };
 
 export default function Button({
@@ -163,7 +168,7 @@ export default function Button({
           variant="body"
           style={{
             fontSize: sizeStyles.fontSize,
-            fontFamily: "Quicksand-SemiBold",
+            fontFamily: "PlusJakartaSans-SemiBold",
             color: theme.colors[variantStyles.textColor],
           }}
         >
