@@ -1,7 +1,6 @@
 import Box from "@/components/Box";
 import Text from "@/components/Text";
 import Button from "@/components/ui/Button/Button";
-import SocialAuthButton from "@/components/ui/SocialAuthButton/SocialAuthButton";
 import TextField from "@/components/ui/TextField/TextField";
 import { signUpSchema } from "@/utils/validationSchemas";
 import { useRouter } from "expo-router";
@@ -23,7 +22,7 @@ export default function SignUpScreen() {
 
   const validateField = async (
     field: "name" | "email" | "password" | "confirmPassword",
-    value: string
+    value: string,
   ) => {
     try {
       await signUpSchema.validateAt(field, {
@@ -54,7 +53,7 @@ export default function SignUpScreen() {
       // Validate all fields
       await signUpSchema.validate(
         { name, email, password, confirmPassword },
-        { abortEarly: false }
+        { abortEarly: false },
       );
 
       // Clear any existing errors
@@ -111,7 +110,12 @@ export default function SignUpScreen() {
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
       >
-        <Box flex={1} backgroundColor="primary" padding="l" justifyContent="center">
+        <Box
+          flex={1}
+          backgroundColor="black"
+          padding="l"
+          justifyContent="center"
+        >
           {/* Header */}
           <Box width="100%" paddingBottom="xl" paddingTop="xl">
             <Text
@@ -180,7 +184,8 @@ export default function SignUpScreen() {
             onChangeText={(text) => {
               setPassword(text);
               if (passwordError) validateField("password", text);
-              if (confirmPassword) validateField("confirmPassword", confirmPassword);
+              if (confirmPassword)
+                validateField("confirmPassword", confirmPassword);
             }}
             onBlur={() => validateField("password", password)}
             error={passwordError}
@@ -208,20 +213,26 @@ export default function SignUpScreen() {
           {/* Sign Up Button */}
           <Box marginTop="m" marginBottom="m">
             <Button
-              variant="cyan"
+              variant="primary"
               size="large"
               fullWidth
               onPress={handleSignUp}
               loading={loading}
-              disabled={loading || !name || !email || !password || !confirmPassword}
+              disabled={
+                loading || !name || !email || !password || !confirmPassword
+              }
             >
               Crear Cuenta
             </Button>
           </Box>
 
-          {/* Divider */}
+          {/* Divider 
           <Box flexDirection="row" alignItems="center" marginVertical="m">
-            <Box flex={1} height={1} style={{ backgroundColor: "rgba(102, 123, 171, 0.5)" }} />
+            <Box
+              flex={1}
+              height={1}
+              style={{ backgroundColor: "rgba(102, 123, 171, 0.5)" }}
+            />
             <Text
               variant="caption"
               marginHorizontal="m"
@@ -229,22 +240,20 @@ export default function SignUpScreen() {
             >
               o regístrate con
             </Text>
-            <Box flex={1} height={1} style={{ backgroundColor: "rgba(102, 123, 171, 0.5)" }} />
-          </Box>
+            <Box
+              flex={1}
+              height={1}
+              style={{ backgroundColor: "rgba(102, 123, 171, 0.5)" }}
+            />
+          </Box>*/}
 
-          {/* Social Auth Buttons */}
+          {/* Social Auth Buttons 
           <Box gap="m" marginBottom="m">
-            <SocialAuthButton
-              provider="google"
-              onPress={handleGoogleSignUp}
-            />
-            <SocialAuthButton
-              provider="apple"
-              onPress={handleAppleSignUp}
-            />
+            <SocialAuthButton provider="google" onPress={handleGoogleSignUp} />
+            <SocialAuthButton provider="apple" onPress={handleAppleSignUp} />
           </Box>
 
-          <Box flex={1} />
+          <Box flex={1} />*/}
 
           {/* Sign In Link */}
           <Box
@@ -253,12 +262,23 @@ export default function SignUpScreen() {
             paddingTop="xl"
             paddingBottom="m"
           >
-            <Text variant="body" style={{ color: "#667bab", fontSize: 14, fontFamily: "PlusJakartaSans-Regular" }}>
+            <Text
+              variant="body"
+              style={{
+                color: "#667bab",
+                fontSize: 14,
+                fontFamily: "PlusJakartaSans-Regular",
+              }}
+            >
               ¿Ya tienes cuenta?{" "}
             </Text>
             <Text
               variant="body"
-              style={{ color: "#00FFFF", fontSize: 14, fontFamily: "PlusJakartaSans-Bold" }}
+              color="primary"
+              style={{
+                fontSize: 14,
+                fontFamily: "PlusJakartaSans-Bold",
+              }}
               onPress={() => router.push("/(auth)/sign-in")}
             >
               Iniciar Sesión

@@ -1,7 +1,6 @@
 import Box from "@/components/Box";
 import Text from "@/components/Text";
 import Button from "@/components/ui/Button/Button";
-import SocialAuthButton from "@/components/ui/SocialAuthButton/SocialAuthButton";
 import TextField from "@/components/ui/TextField/TextField";
 import { signInSchema } from "@/utils/validationSchemas";
 import { useRouter } from "expo-router";
@@ -48,7 +47,7 @@ export default function SignInScreen() {
       // Simulate API call
       setTimeout(() => {
         setLoading(false);
-        // Navigate to main app after successful sign-in
+        router.replace("/(lender)/(tabs)");
       }, 1500);
     } catch (error) {
       if (error instanceof ValidationError) {
@@ -86,7 +85,12 @@ export default function SignInScreen() {
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
       >
-        <Box flex={1} backgroundColor="primary" padding="l" justifyContent="center">
+        <Box
+          flex={1}
+          backgroundColor="black"
+          padding="l"
+          justifyContent="center"
+        >
           {/* Header */}
           <Box width="100%" paddingBottom="xl" paddingTop="xl">
             <Text
@@ -151,7 +155,7 @@ export default function SignInScreen() {
           <Box alignItems="flex-end" marginTop="s" marginBottom="l">
             <Text
               variant="body"
-              color="cyan"
+              color="primary"
               style={{ fontFamily: "PlusJakartaSans-Medium", fontSize: 14 }}
             >
               ¿Olvidaste tu contraseña?
@@ -161,7 +165,7 @@ export default function SignInScreen() {
           {/* Sign In Button */}
           <Box marginBottom="m">
             <Button
-              variant="cyan"
+              variant="primary"
               size="large"
               fullWidth
               onPress={handleSignIn}
@@ -172,9 +176,13 @@ export default function SignInScreen() {
             </Button>
           </Box>
 
-          {/* Divider */}
+          {/* Divider 
           <Box flexDirection="row" alignItems="center" marginVertical="m">
-            <Box flex={1} height={1} style={{ backgroundColor: "rgba(102, 123, 171, 0.5)" }} />
+            <Box
+              flex={1}
+              height={1}
+              style={{ backgroundColor: "rgba(102, 123, 171, 0.5)" }}
+            />
             <Text
               variant="caption"
               marginHorizontal="m"
@@ -182,20 +190,18 @@ export default function SignInScreen() {
             >
               o continuar con
             </Text>
-            <Box flex={1} height={1} style={{ backgroundColor: "rgba(102, 123, 171, 0.5)" }} />
-          </Box>
+            <Box
+              flex={1}
+              height={1}
+              style={{ backgroundColor: "rgba(102, 123, 171, 0.5)" }}
+            />
+          </Box>*/}
 
-          {/* Social Auth Buttons */}
+          {/* Social Auth Buttons
           <Box gap="m" marginBottom="m">
-            <SocialAuthButton
-              provider="google"
-              onPress={handleGoogleSignIn}
-            />
-            <SocialAuthButton
-              provider="apple"
-              onPress={handleAppleSignIn}
-            />
-          </Box>
+            <SocialAuthButton provider="google" onPress={handleGoogleSignIn} />
+            <SocialAuthButton provider="apple" onPress={handleAppleSignIn} />
+          </Box> */}
 
           <Box flex={1} />
 
@@ -206,12 +212,20 @@ export default function SignInScreen() {
             paddingTop="xl"
             paddingBottom="m"
           >
-            <Text variant="body" style={{ color: "#667bab", fontSize: 14, fontFamily: "PlusJakartaSans-Regular" }}>
+            <Text
+              variant="body"
+              style={{
+                color: "#667bab",
+                fontSize: 14,
+                fontFamily: "PlusJakartaSans-Regular",
+              }}
+            >
               ¿No tienes cuenta?{" "}
             </Text>
             <Text
               variant="body"
-              style={{ color: "#00FFFF", fontSize: 14, fontFamily: "PlusJakartaSans-Bold" }}
+              color="primary"
+              style={{ fontSize: 14, fontFamily: "PlusJakartaSans-Bold" }}
               onPress={() => router.push("/(auth)/sign-up")}
             >
               Regístrate

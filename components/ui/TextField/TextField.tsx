@@ -50,8 +50,8 @@ export default function TextField({
             color: hasError
               ? theme.colors.red600
               : isTransparent
-              ? theme.colors.tertiary
-              : theme.colors.textPrimary,
+                ? theme.colors.secondary
+                : theme.colors.textPrimary,
           }}
         >
           {label}
@@ -67,12 +67,14 @@ export default function TextField({
         paddingVertical="m"
         opacity={disabled ? 0.6 : 1}
         style={{
-          backgroundColor: isTransparent ? "#1f2c4a" : "#FFFFFF",
+          backgroundColor: isTransparent
+            ? "rgba(102, 123, 171, 0.5)"
+            : "#FFFFFF",
           borderColor: hasError
             ? theme.colors.red600
             : isFocused
-            ? theme.colors.cyan
-            : "rgba(102, 123, 171, 0.5)",
+              ? theme.colors.primary
+              : "rgba(102, 123, 171, 0.5)",
         }}
       >
         {icon && (
@@ -80,7 +82,7 @@ export default function TextField({
             <Icon
               name={icon}
               size={20}
-              color={hasError ? "red600" : isFocused ? "cyan" : "secondary"}
+              color={hasError ? "red600" : isFocused ? "primary" : "secondary"}
             />
           </Box>
         )}
@@ -91,7 +93,7 @@ export default function TextField({
             onChangeText={onChangeText}
             placeholder={placeholder}
             placeholderTextColor={
-              isTransparent ? theme.colors.secondary : theme.colors.gray400
+              isTransparent ? theme.colors.tertiary : theme.colors.black
             }
             secureTextEntry={isPassword && !isPasswordVisible}
             editable={!disabled}
@@ -101,7 +103,7 @@ export default function TextField({
               fontFamily: "PlusJakartaSans-Regular",
               fontSize: 16,
               color: isTransparent
-                ? theme.colors.tertiary
+                ? theme.colors.secondary
                 : theme.colors.textPrimary,
               padding: 0,
               margin: 0,
@@ -119,7 +121,7 @@ export default function TextField({
             <Icon
               name={isPasswordVisible ? "EyeOff" : "Eye"}
               size={20}
-              color={isFocused ? "cyan" : "secondary"}
+              color={isFocused ? "primary" : "secondary"}
             />
           </TouchableOpacity>
         )}

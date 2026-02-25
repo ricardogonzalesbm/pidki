@@ -1,6 +1,18 @@
-# Welcome to your Expo app 👋
+# PIDKI
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Pidki is an application that connects borrowers and lenders. It is very simple. Users can sign up with a given role, either borrower or lender. Lenders can enter the app and see a list of borrowers asking for loans. Lenders can review these requests and select one to make an offer.
+
+The loan request made by the borrower can be for an amount up to 2000 Soles Peruanos. The borrower should also specify the payment period. For example, they can request 2000 soles to be paid in 2 months with two payments of 1000 soles at the end of each month.
+
+Lenders can make offers on loan requests. For example, a lender might offer the 2000 soles with 1% interest to be paid in 1 month. Another lender could make a different offer to the same borrower, such as offering the money with 0.8% interest to be paid in 2 months as the borrower originally requested.
+
+Users will have a score from 0 to 10. This score will help users identify which users are the best option to select.
+
+The app will allow borrowers to select a reason for why they are requesting a loan.
+
+Users will be able to request a loan or make a loan offer if they pass third-party qualification.
+
+Pidki will connect people, giving them the opportunity to create a business by lending and borrowing money.
 
 ## Get started
 
@@ -16,35 +28,4 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+TODO List:
