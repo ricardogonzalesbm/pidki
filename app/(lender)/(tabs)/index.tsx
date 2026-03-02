@@ -1,16 +1,16 @@
-import Box from '@/components/Box';
-import Text from '@/components/Text';
-import LoanRequestBidCard from '@/components/ui/LoanRequestBidCard/LoanRequestBidCard';
-import { mockLoanRequests } from '@/data/mockLoanRequests';
-import { useRouter } from 'expo-router';
-import { ScrollView, TouchableOpacity } from 'react-native';
+import Box from "@/components/Box";
+import Text from "@/components/Text";
+import LoanRequestBidCard from "@/components/ui/LoanRequestBidCard/LoanRequestBidCard";
+import { mockLoanRequests } from "@/data/mockLoanRequests";
+import { useRouter } from "expo-router";
+import { ScrollView, TouchableOpacity } from "react-native";
 
 export default function LenderMarketplaceScreen() {
   const router = useRouter();
 
   const handlePlaceBid = (loanRequestId: string) => {
     router.push({
-      pathname: '/(lender)/marketplace/loan-offer',
+      pathname: "/(lender)/marketplace/loan-offer",
       params: { loanRequestId },
     });
   };
@@ -24,19 +24,12 @@ export default function LenderMarketplaceScreen() {
             variant="header"
             style={{
               fontSize: 28,
-              fontFamily: 'PlusJakartaSans-Bold',
+              fontFamily: "PlusJakartaSans-Bold",
             }}
           >
             Marketplace
           </Text>
-          <Text
-            variant="body"
-            marginTop="s"
-            style={{
-              fontFamily: 'PlusJakartaSans-Regular',
-              color: '#667bab',
-            }}
-          >
+          <Text variant="body" marginTop="s">
             Explora solicitudes de préstamo
           </Text>
         </Box>

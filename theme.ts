@@ -22,6 +22,7 @@ const palette = {
   red600: "#DC2626",
   yellow500: "#EBC106",
   yellow600: "#D97706",
+  darkNavyBlue: "#18233a",
 };
 
 const theme = createTheme({
@@ -49,6 +50,12 @@ const theme = createTheme({
     buttonDangerText: palette.white,
     buttonWarning: palette.yellow500,
     buttonWarningText: palette.white,
+    buttonBlack: palette.black,
+    buttonBlackText: palette.white,
+    buttonNavy: palette.darkNavyBlue,
+    buttonNavyText: palette.white,
+    buttonOutlineBlack: "transparent",
+    buttonOutlineBlackText: palette.black,
     primary: palette.primary,
     secondary: palette.secondary,
     tertiary: palette.tertiary,
@@ -70,6 +77,7 @@ const theme = createTheme({
     yellow500: palette.yellow500,
     yellow600: palette.yellow600,
     black: palette.black,
+    darkNavyBlue: palette.darkNavyBlue,
   },
   spacing: {
     xs: 4,
@@ -95,6 +103,11 @@ const theme = createTheme({
     },
     body: {
       fontSize: 16,
+      fontFamily: "Quicksand-Regular",
+      color: "textPrimary",
+    },
+    subtitle: {
+      fontSize: 12,
       fontFamily: "Quicksand-Regular",
       color: "textPrimary",
     },

@@ -1,3 +1,4 @@
+import theme from "@/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import { Platform } from "react-native";
@@ -7,13 +8,13 @@ export default function LenderTabsLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#FFFFFF",
-        tabBarInactiveTintColor: "#9CA3AF",
+        tabBarActiveTintColor: theme.colors.white,
+        tabBarInactiveTintColor: theme.colors.gray400,
         tabBarStyle: {
           position: "absolute",
           bottom: 25,
           elevation: 0,
-          backgroundColor: "rgba(24, 35, 58, 0.85)",
+          backgroundColor: theme.colors.darkNavyBlue,
           borderRadius: 30,
           height: 70,
           paddingBottom: 10,
@@ -21,13 +22,13 @@ export default function LenderTabsLayout() {
           borderTopWidth: 0,
           ...Platform.select({
             ios: {
-              backgroundColor: "rgba(24, 35, 58, 0.9)",
+              backgroundColor: theme.colors.darkNavyBlue,
               left: 20,
               right: 20,
               marginHorizontal: 20,
             },
             android: {
-              backgroundColor: "rgba(24, 35, 58, 0.95)",
+              backgroundColor: theme.colors.darkNavyBlue,
               left: 20,
               right: 20,
               marginHorizontal: 20,

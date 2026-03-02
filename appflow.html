@@ -1,0 +1,1949 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frello App Map</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #0f0f1a;
+        color: #e0e0f0;
+      }
+
+      header {
+        background: linear-gradient(135deg, #3e126b, #5321bd);
+        padding: 24px 32px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      header h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: white;
+      }
+      header span {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.15);
+        padding: 4px 10px;
+        border-radius: 20px;
+      }
+
+      nav {
+        background: #1a1a2e;
+        padding: 0 32px;
+        display: flex;
+        gap: 4px;
+        border-bottom: 1px solid #2a2a4a;
+        overflow-x: auto;
+      }
+      nav button {
+        background: none;
+        border: none;
+        color: #8888aa;
+        padding: 14px 18px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        border-bottom: 3px solid transparent;
+        white-space: nowrap;
+        transition: all 0.2s;
+      }
+      nav button:hover {
+        color: #c0c0e0;
+      }
+      nav button.active {
+        color: #9b59f5;
+        border-bottom-color: #9b59f5;
+      }
+
+      .content {
+        padding: 32px;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .section {
+        display: none;
+      }
+      .section.active {
+        display: block;
+      }
+
+      h2 {
+        font-size: 20px;
+        color: #c0a8ff;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      h2::before {
+        content: "";
+        display: inline-block;
+        width: 4px;
+        height: 20px;
+        background: #9b59f5;
+        border-radius: 2px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 16px;
+      }
+      .grid-wide {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        gap: 16px;
+      }
+
+      .card {
+        background: #1e1e35;
+        border: 1px solid #2d2d50;
+        border-radius: 12px;
+        overflow: hidden;
+        transition:
+          transform 0.2s,
+          border-color 0.2s;
+      }
+      .card:hover {
+        transform: translateY(-2px);
+        border-color: #5321bd;
+      }
+
+      .card-header {
+        background: #252545;
+        padding: 14px 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .card-header .route {
+        font-size: 11px;
+        font-family: monospace;
+        color: #9b59f5;
+        background: rgba(155, 89, 245, 0.12);
+        padding: 3px 8px;
+        border-radius: 4px;
+      }
+      .card-header .title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #e0e0f0;
+        flex: 1;
+      }
+
+      .card-body {
+        padding: 14px 16px;
+      }
+
+      .section-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #6666aa;
+        margin: 12px 0 6px;
+        font-weight: 600;
+      }
+      .section-label:first-child {
+        margin-top: 0;
+      }
+
+      .item-list {
+        list-style: none;
+      }
+      .item-list li {
+        font-size: 12.5px;
+        color: #c0c0e0;
+        padding: 4px 0;
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
+        border-bottom: 1px solid #252540;
+      }
+      .item-list li:last-child {
+        border-bottom: none;
+      }
+      .item-list li::before {
+        content: "·";
+        color: #5321bd;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+
+      .badge {
+        font-size: 10px;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-weight: 600;
+        flex-shrink: 0;
+      }
+      .badge-btn {
+        background: rgba(83, 33, 189, 0.25);
+        color: #b090ff;
+      }
+      .badge-link {
+        background: rgba(52, 211, 153, 0.15);
+        color: #6ee7b7;
+      }
+      .badge-input {
+        background: rgba(251, 191, 36, 0.15);
+        color: #fcd34d;
+      }
+      .badge-tab {
+        background: rgba(59, 130, 246, 0.2);
+        color: #93c5fd;
+      }
+      .badge-modal {
+        background: rgba(236, 72, 153, 0.15);
+        color: #f9a8d4;
+      }
+      .badge-card {
+        background: rgba(245, 158, 11, 0.15);
+        color: #fbbf24;
+      }
+
+      .nav-arrow {
+        font-size: 11px;
+        color: #888;
+        font-style: italic;
+        display: block;
+        padding-left: 16px;
+        margin-top: 2px;
+      }
+
+      /* Flow diagram */
+      .flow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 16px;
+        background: #1a1a30;
+        border-radius: 8px;
+        border: 1px solid #2a2a45;
+      }
+      .flow-node {
+        background: #252550;
+        border: 1px solid #5321bd;
+        color: #c0a8ff;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: default;
+      }
+      .flow-arrow {
+        color: #5321bd;
+        font-size: 16px;
+      }
+
+      /* Tabs inside lender/borrower */
+      .tabs-bar {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+      }
+      .tab-chip {
+        background: #252545;
+        border: 1px solid #3d3d6a;
+        color: #9b9bc0;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .tab-chip.active,
+      .tab-chip:hover {
+        background: #3a2060;
+        border-color: #9b59f5;
+        color: #c0a8ff;
+      }
+
+      .sub-section {
+        display: none;
+      }
+      .sub-section.active {
+        display: block;
+      }
+
+      .screen-full {
+        background: #1e1e35;
+        border: 1px solid #2d2d50;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .screen-full .screen-header {
+        background: linear-gradient(135deg, #3e126b, #5321bd);
+        padding: 16px 20px;
+        font-size: 16px;
+        font-weight: 700;
+        color: white;
+      }
+      .screen-full .screen-header small {
+        display: block;
+        font-size: 11px;
+        opacity: 0.7;
+        font-weight: 400;
+        margin-top: 4px;
+        font-family: monospace;
+      }
+      .screen-full .screen-body {
+        padding: 16px 20px;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      @media (max-width: 700px) {
+        .two-col {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .highlight-box {
+        background: #252545;
+        border-left: 3px solid #9b59f5;
+        padding: 10px 14px;
+        border-radius: 0 6px 6px 0;
+        margin: 8px 0;
+      }
+      .highlight-box p {
+        font-size: 12.5px;
+        color: #b0b0d0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>Frello App Map</h1>
+        <span
+          >Expo Router · React Native · Full screen & navigation reference</span
+        >
+      </div>
+    </header>
+
+    <nav>
+      <button class="active" onclick="showSection('overview', this)">
+        Overview
+      </button>
+      <button onclick="showSection('auth', this)">Auth Flow</button>
+      <button onclick="showSection('lender', this)">Lender</button>
+      <button onclick="showSection('borrower', this)">Borrower</button>
+      <button onclick="showSection('profile', this)">Profile & Settings</button>
+      <button onclick="showSection('aux', this)">Auxiliary Screens</button>
+    </nav>
+
+    <div class="content">
+      <!-- OVERVIEW -->
+      <div id="overview" class="section active">
+        <h2>App Navigation Flow</h2>
+
+        <div class="flow">
+          <div class="flow-node">/ (Welcome)</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">/sign-up/</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">/sign-up/enter-phone-number</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">/sign-up/create-account</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">/sign-up/create-password</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">/enter-verification-code/</div>
+        </div>
+
+        <div class="flow">
+          <div class="flow-node">/ (Welcome)</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">/sign-in/</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">/enter-verification-code/</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">/lender/ or /borrower/</div>
+        </div>
+
+        <div class="flow">
+          <div class="flow-node">/sign-in/</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">/sign-in/enter-username-password</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">/sign-in/reset-password</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">/sign-up/create-password (RESET)</div>
+        </div>
+
+        <br />
+        <h2>All Routes at a Glance</h2>
+        <div class="grid">
+          <div class="card">
+            <div class="card-header">
+              <span class="route">/</span
+              ><span class="title">Welcome Screen</span>
+            </div>
+            <div class="card-body">
+              <div class="section-label">Buttons</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-btn">BTN</span> Create account →
+                  <em>/sign-up/</em>
+                </li>
+                <li>
+                  <span class="badge badge-btn">BTN</span> Log in →
+                  <em>/sign-in/</em>
+                </li>
+              </ul>
+              <div class="section-label">UI</div>
+              <ul class="item-list">
+                <li>Frello logo / icon</li>
+                <li>Linear gradient background (purple)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="route">/sign-in/</span
+              ><span class="title">Log In (Phone)</span>
+            </div>
+            <div class="card-body">
+              <div class="section-label">Inputs</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-input">INPUT</span> Mobile Number
+                  (phone format)
+                </li>
+              </ul>
+              <div class="section-label">Buttons</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-btn">BTN</span> Continue →
+                  <em>/enter-verification-code/</em>
+                </li>
+                <li>
+                  <span class="badge badge-btn">BTN</span> Log in with Apple
+                </li>
+                <li>
+                  <span class="badge badge-btn">BTN</span> Log in with Google
+                </li>
+                <li>
+                  <span class="badge badge-btn">BTN</span> Log in with Facebook
+                </li>
+                <li>
+                  <span class="badge badge-btn">BTN</span> Log in using password
+                  → <em>/sign-in/enter-username-password</em>
+                </li>
+              </ul>
+              <div class="section-label">Links</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-link">LINK</span> Create an account →
+                  <em>/sign-up/</em>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="route">/sign-in/enter-username-password</span
+              ><span class="title">Login with Password</span>
+            </div>
+            <div class="card-body">
+              <div class="section-label">Inputs</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-input">INPUT</span> Mobile number
+                  (phone)
+                </li>
+                <li>
+                  <span class="badge badge-input">INPUT</span> Password (masked)
+                </li>
+              </ul>
+              <div class="section-label">Buttons & Links</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-btn">BTN</span> Continue → sign in
+                </li>
+                <li>
+                  <span class="badge badge-link">LINK</span> Forgot password? →
+                  <em>/sign-in/reset-password</em>
+                </li>
+                <li>
+                  <span class="badge badge-link">LINK</span> Create an account →
+                  <em>/sign-up/</em>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="route">/sign-in/reset-password</span
+              ><span class="title">Reset Password</span>
+            </div>
+            <div class="card-body">
+              <div class="section-label">Inputs</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-input">INPUT</span> Mobile Number
+                  (phone)
+                </li>
+              </ul>
+              <div class="section-label">Buttons</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-btn">BTN</span> Continue →
+                  <em>/sign-up/create-password (RESET mode)</em>
+                </li>
+              </ul>
+              <div class="section-label">Text</div>
+              <ul class="item-list">
+                <li>"We will send a text with a verification code."</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="route">/enter-verification-code/</span
+              ><span class="title">OTP Verification</span>
+            </div>
+            <div class="card-body">
+              <div class="section-label">Inputs</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-input">INPUT</span> 6-digit OTP code
+                  (auto-submits on fill)
+                </li>
+              </ul>
+              <div class="section-label">Actions</div>
+              <ul class="item-list">
+                <li><span class="badge badge-link">LINK</span> Resend code</li>
+              </ul>
+              <div class="section-label">Text</div>
+              <ul class="item-list">
+                <li>"Enter the 6-digit code sent to [phone number]"</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="route">/platform-eligible</span
+              ><span class="title">State Not Supported</span>
+            </div>
+            <div class="card-body">
+              <div class="section-label">UI</div>
+              <ul class="item-list">
+                <li>White card centered</li>
+                <li>"Not Yet Available In Your State"</li>
+                <li>Description text about expanding states</li>
+              </ul>
+              <div class="section-label">Buttons</div>
+              <ul class="item-list">
+                <li><span class="badge badge-btn">BTN</span> Logout</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUTH FLOW -->
+      <div id="auth" class="section">
+        <h2>Sign-Up Flow</h2>
+        <div class="grid-wide">
+          <div class="screen-full">
+            <div class="screen-header">
+              Account Type <small>/sign-up/ (default/index)</small>
+            </div>
+            <div class="screen-body">
+              <div class="section-label">Title</div>
+              <div class="highlight-box"><p>"Account Type"</p></div>
+              <div class="section-label">UI Elements</div>
+              <ul class="item-list">
+                <li>Radio card group — Borrow Money / Lend Money options</li>
+                <li>Each option has an icon + title + description</li>
+              </ul>
+              <div class="section-label">Buttons</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-btn">BTN</span> Submit (disabled
+                  until selection) → <em>/sign-up/select-state</em>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="screen-full">
+            <div class="screen-header">
+              Select State <small>/sign-up/select-state</small>
+            </div>
+            <div class="screen-body">
+              <div class="section-label">Title</div>
+              <div class="highlight-box">
+                <p>"Welcome! Let's get started!"</p>
+              </div>
+              <div class="section-label">Inputs</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-input">INPUT</span> State dropdown /
+                  selector
+                </li>
+              </ul>
+              <div class="section-label">Navigation</div>
+              <ul class="item-list">
+                <li>
+                  Routes to sign-up flow or platform-eligible based on state
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="screen-full">
+            <div class="screen-header">
+              Enter Phone Number <small>/sign-up/enter-phone-number</small>
+            </div>
+            <div class="screen-body">
+              <div class="section-label">Title</div>
+              <div class="highlight-box"><p>"Enter phone number"</p></div>
+              <div class="section-label">Inputs</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-input">INPUT</span> Phone Number —
+                  placeholder: "(123) 456-7890"
+                </li>
+              </ul>
+              <div class="section-label">Buttons</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-btn">BTN</span> Continue →
+                  <em>/sign-up/create-account</em>
+                </li>
+                <li>
+                  <span class="badge badge-btn">BTN</span> Continue with Apple
+                </li>
+                <li>
+                  <span class="badge badge-btn">BTN</span> Continue with Google
+                </li>
+                <li>
+                  <span class="badge badge-btn">BTN</span> Continue with
+                  Facebook
+                </li>
+              </ul>
+              <div class="section-label">Links</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-link">LINK</span> Login →
+                  <em>/sign-in/</em>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="screen-full">
+            <div class="screen-header">
+              Create Account <small>/sign-up/create-account</small>
+            </div>
+            <div class="screen-body">
+              <div class="section-label">Title</div>
+              <div class="highlight-box"><p>"Create account"</p></div>
+              <div class="section-label">Inputs</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-input">INPUT</span> First name —
+                  placeholder: "First name"
+                </li>
+                <li>
+                  <span class="badge badge-input">INPUT</span> Last name —
+                  placeholder: "Last name"
+                </li>
+                <li>
+                  <span class="badge badge-input">INPUT</span> Email address —
+                  placeholder: "email@domain.com"
+                </li>
+              </ul>
+              <div class="section-label">Buttons</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-btn">BTN</span> Continue (disabled if
+                  invalid) → <em>/sign-up/create-password</em>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="screen-full">
+            <div class="screen-header">
+              Create Password <small>/sign-up/create-password</small>
+            </div>
+            <div class="screen-body">
+              <div class="section-label">Title</div>
+              <div class="highlight-box"><p>"Create password"</p></div>
+              <div class="section-label">Inputs</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-input">INPUT</span> Password (masked)
+                  — "Enter Password"
+                </li>
+                <li>
+                  <span class="badge badge-input">INPUT</span> Confirm password
+                  (masked) — "Re-type password"
+                </li>
+              </ul>
+              <div class="section-label">
+                Validation Rules (displayed inline)
+              </div>
+              <ul class="item-list">
+                <li>Min 8 characters</li>
+                <li>Max 80 characters</li>
+                <li>Must include uppercase letter</li>
+                <li>Must include lowercase letter</li>
+                <li>Must include symbol</li>
+              </ul>
+              <div class="section-label">Buttons</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-btn">BTN</span> Continue → sign-up
+                  mutation or reset password flow
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="screen-full">
+            <div class="screen-header">
+              Enter Verification Code <small>/enter-verification-code/</small>
+            </div>
+            <div class="screen-body">
+              <div class="section-label">Title</div>
+              <div class="highlight-box"><p>"Enter verification code"</p></div>
+              <div class="section-label">Subtitle</div>
+              <ul class="item-list">
+                <li>
+                  "Enter the 6-digit code sent to [formatted phone number]"
+                </li>
+              </ul>
+              <div class="section-label">Inputs</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-input">INPUT</span> OTP Entry — 6
+                  boxes, auto-submits on fill
+                </li>
+              </ul>
+              <div class="section-label">Actions</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-link">LINK</span> "Resend code" —
+                  pressable text with loading indicator
+                </li>
+              </ul>
+              <div class="section-label">Flows after submit</div>
+              <ul class="item-list">
+                <li>CUSTOM_WITHOUT_SRP → Sign-in success → Dashboard</li>
+                <li>
+                  RESET_PASSWORD → <em>/sign-in/enter-username-password</em>
+                </li>
+                <li>Sign-up → Profile completion</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LENDER -->
+      <div id="lender" class="section">
+        <div class="tabs-bar">
+          <div
+            class="tab-chip active"
+            onclick="showSub('lender', 'l-home', this)"
+          >
+            Home
+          </div>
+          <div
+            class="tab-chip"
+            onclick="showSub('lender', 'l-marketplace', this)"
+          >
+            Marketplace
+          </div>
+          <div class="tab-chip" onclick="showSub('lender', 'l-activity', this)">
+            My Activity
+          </div>
+          <div class="tab-chip" onclick="showSub('lender', 'l-wallet', this)">
+            Wallet
+          </div>
+          <div class="tab-chip" onclick="showSub('lender', 'l-support', this)">
+            Support / FAQ
+          </div>
+          <div class="tab-chip" onclick="showSub('lender', 'l-menu', this)">
+            Menu
+          </div>
+        </div>
+
+        <div id="l-home" class="sub-section active">
+          <div class="screen-full">
+            <div class="screen-header">Lender Home <small>/lender/</small></div>
+            <div class="screen-body two-col">
+              <div>
+                <div class="section-label">Header</div>
+                <ul class="item-list">
+                  <li>HeaderNav (default)</li>
+                  <li>Notification bell</li>
+                  <li>Menu icon → <em>/lender/menu</em></li>
+                </ul>
+                <div class="section-label">Banner (if no bank account)</div>
+                <ul class="item-list">
+                  <li>Alert text + "Link Bank Account" link</li>
+                </ul>
+                <div class="section-label">Marketplace Section</div>
+                <ul class="item-list">
+                  <li>Title: "Marketplace"</li>
+                  <li>
+                    <span class="badge badge-link">LINK</span> "See all" →
+                    <em>/lender/marketplace/</em>
+                  </li>
+                  <li>Horizontal carousel of MarketplaceCards</li>
+                </ul>
+              </div>
+              <div>
+                <div class="section-label">MarketplaceCard Shows</div>
+                <ul class="item-list">
+                  <li>Loan amount</li>
+                  <li>Purpose (e.g. "for Moving")</li>
+                  <li>Requested date</li>
+                  <li>Borrower Frello Score</li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "See loan" →
+                    scrolls to marketplace
+                  </li>
+                </ul>
+                <div class="section-label">Educational Sections</div>
+                <ul class="item-list">
+                  <li>FrelloEffect carousel (informational cards)</li>
+                  <li>FrelloInAction timeline</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="l-marketplace" class="sub-section">
+          <div class="grid-wide">
+            <div class="screen-full">
+              <div class="screen-header">
+                Marketplace <small>/lender/marketplace/</small>
+              </div>
+              <div class="screen-body">
+                <div class="section-label">Header Banner</div>
+                <ul class="item-list">
+                  <li>"LEVEL UP – Become a preferred lender for $49/month"</li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> CTA →
+                    <em>/lender/marketplace/borrower-information/</em>
+                  </li>
+                </ul>
+                <div class="section-label">Controls</div>
+                <ul class="item-list">
+                  <li>Sort by dropdown (dialog with apply button)</li>
+                </ul>
+                <div class="section-label">Loan Request Cards (per item)</div>
+                <ul class="item-list">
+                  <li>Loan amount (large)</li>
+                  <li>Loan purpose + icon</li>
+                  <li>Number of loans repaid</li>
+                  <li>Frello Score badge (tappable) → borrower info modal</li>
+                  <li>Expandable payment details</li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "Place offer" →
+                    eligibility check → <em>/lender/marketplace/loan-offer</em>
+                  </li>
+                </ul>
+                <div class="section-label">Pagination</div>
+                <ul class="item-list">
+                  <li>Paginator component at bottom</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="screen-full">
+              <div class="screen-header">
+                Loan Offer <small>/lender/marketplace/loan-offer/</small>
+              </div>
+              <div class="screen-body">
+                <div class="section-label">Form (LoanOffer component)</div>
+                <ul class="item-list">
+                  <li>Loan details summary</li>
+                  <li>Funding amount display</li>
+                  <li>Payment schedule info</li>
+                  <li>
+                    <span class="badge badge-input">INPUT</span> Interest rate
+                    field
+                  </li>
+                  <li><span class="badge badge-btn">BTN</span> Submit offer</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="screen-full">
+              <div class="screen-header">
+                Borrower Information
+                <small>/lender/marketplace/borrower-information/</small>
+              </div>
+              <div class="screen-body">
+                <div class="section-label">Header</div>
+                <ul class="item-list">
+                  <li>HeaderNav with "Borrower Information" + back button</li>
+                </ul>
+                <div class="section-label">Hero Section</div>
+                <ul class="item-list">
+                  <li>Frello Score (large badge)</li>
+                  <li>Info tooltip about score calculation</li>
+                </ul>
+                <div class="section-label">Completed Loans List</div>
+                <ul class="item-list">
+                  <li>Title: "Completed Loans" + count</li>
+                  <li>
+                    ClosedLoanCard items: amount, reason, date, payment status
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="screen-full">
+              <div class="screen-header">
+                SSN Verification
+                <small>/lender/marketplace/social-security-number</small>
+              </div>
+              <div class="screen-body">
+                <div class="section-label">UI</div>
+                <ul class="item-list">
+                  <li>HeaderNav: "Marketplace"</li>
+                  <li>SocialSecurityNumber component (SSN input form)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="l-activity" class="sub-section">
+          <div class="grid-wide">
+            <div class="screen-full">
+              <div class="screen-header">
+                My Activity <small>/lender/my-activity/</small>
+              </div>
+              <div class="screen-body">
+                <div class="section-label">Active Loans Section</div>
+                <ul class="item-list">
+                  <li>Title: "Active loans"</li>
+                  <li>
+                    <span class="badge badge-link">LINK</span> "See all" →
+                    <em>/lender/my-activity/[list]?list=active-loans</em>
+                  </li>
+                  <li>Horizontal carousel of ActiveLoanCards</li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "See details" →
+                    opens modal with full card
+                  </li>
+                </ul>
+                <div class="section-label">Links</div>
+                <ul class="item-list">
+                  <li>
+                    <span class="badge badge-link">LINK</span> "See closed
+                    loans" →
+                    <em>/lender/my-activity/[list]?list=closed-loans</em>
+                  </li>
+                </ul>
+                <div class="section-label">My Offers Section</div>
+                <ul class="item-list">
+                  <li>Title: "My offers"</li>
+                  <li>
+                    <span class="badge badge-link">LINK</span> "See all" →
+                    <em>/lender/my-activity/[list]?list=loan-offers</em>
+                  </li>
+                  <li>Horizontal carousel of BidCards</li>
+                  <li>Card modal CTAs: "Edit my offer", "Cancel my offer"</li>
+                </ul>
+                <div class="section-label">Empty State</div>
+                <ul class="item-list">
+                  <li>Frello icon + message</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="screen-full">
+              <div class="screen-header">
+                Activity List <small>/lender/my-activity/[list]</small>
+              </div>
+              <div class="screen-body">
+                <div class="section-label">Controls (active loans only)</div>
+                <ul class="item-list">
+                  <li>Sort by: Newest/Oldest, Amount high/low</li>
+                </ul>
+                <div class="section-label">List types</div>
+                <ul class="item-list">
+                  <li>active-loans → ActiveLoanCard items</li>
+                  <li>closed-loans → ClosedLoanCard items</li>
+                  <li>loan-offers → BidCard items with Edit/Cancel CTAs</li>
+                </ul>
+                <div class="section-label">Edit Offer Modal</div>
+                <ul class="item-list">
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "Edit my offer" →
+                    <em>/lender/marketplace/loan-offer</em>
+                  </li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "Cancel my offer"
+                  </li>
+                </ul>
+                <div class="section-label">Pagination</div>
+                <ul class="item-list">
+                  <li>Paginator at bottom</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="l-wallet" class="sub-section">
+          <div class="grid-wide">
+            <div class="screen-full">
+              <div class="screen-header">
+                Lender Wallet <small>/lender/wallet/</small>
+              </div>
+              <div class="screen-body two-col">
+                <div>
+                  <div class="section-label">Banner (if unverified)</div>
+                  <ul class="item-list">
+                    <li>Alert icon</li>
+                    <li>
+                      "Finish account verification to add funds and see your
+                      wallet balance!"
+                    </li>
+                    <li>
+                      <span class="badge badge-btn">BTN</span> "Verify account"
+                      → Plaid flow
+                    </li>
+                  </ul>
+                  <div class="section-label">Hero 3 Cards</div>
+                  <ul class="item-list">
+                    <li>Frello Total balance card</li>
+                    <li>
+                      <span class="badge badge-btn">BTN</span> "Add funds" →
+                      opens modal
+                    </li>
+                    <li>
+                      <span class="badge badge-btn">BTN</span> "Transfer funds"
+                      → opens modal
+                    </li>
+                    <li>
+                      <span class="badge badge-link">LINK</span> "See all
+                      transactions" →
+                      <em>/lender/wallet/transaction-history/</em>
+                    </li>
+                    <li>Frello Credit balance card</li>
+                    <li>Cash balance card</li>
+                  </ul>
+                </div>
+                <div>
+                  <div class="section-label">AutoBid Section</div>
+                  <ul class="item-list">
+                    <li>Toggle: automatic bidding on/off</li>
+                    <li>Min/Max amount, return %, period display</li>
+                    <li>
+                      <span class="badge badge-btn">BTN</span> Edit →
+                      AutoBidParamsModal
+                    </li>
+                    <li>
+                      AutoBidParamsModal form inputs: return min/max, period
+                      min/max, amount min/max, score min
+                    </li>
+                  </ul>
+                  <div class="section-label">Linked Bank Accounts</div>
+                  <ul class="item-list">
+                    <li>"Linked Bank Account" header</li>
+                    <li>
+                      <span class="badge badge-btn">BTN</span> "Change default"
+                      → dialog
+                    </li>
+                    <li>
+                      <span class="badge badge-btn">BTN</span> "Add new bank" →
+                      Plaid
+                    </li>
+                    <li>List of bank account items</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="screen-full">
+              <div class="screen-header">
+                Transaction History
+                <small>/lender/wallet/transaction-history/</small>
+              </div>
+              <div class="screen-body">
+                <div class="section-label">UI</div>
+                <ul class="item-list">
+                  <li>TransactionHistoryLayout (role: LENDER)</li>
+                  <li>List of transactions with dates/amounts</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="l-support" class="sub-section">
+          <div class="grid">
+            <div class="card">
+              <div class="card-header">
+                <span class="route">/lender/support/</span
+                ><span class="title">Support / Help Center</span>
+              </div>
+              <div class="card-body">
+                <ul class="item-list">
+                  <li>HelpCenterLayout component</li>
+                  <li>Categories list</li>
+                  <li>Contact CTA</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <span class="route">/lender/support/faq/</span
+                ><span class="title">FAQ List</span>
+              </div>
+              <div class="card-body">
+                <ul class="item-list">
+                  <li>FaqListLayout — list of FAQ categories</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <span class="route">/lender/support/faq/[category]</span
+                ><span class="title">FAQ Category</span>
+              </div>
+              <div class="card-body">
+                <ul class="item-list">
+                  <li>FAQCategoryLayout — list of questions in category</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <span class="route">/lender/support/faq/detail/</span
+                ><span class="title">FAQ Detail</span>
+              </div>
+              <div class="card-body">
+                <ul class="item-list">
+                  <li>FAQDetailLayout — full question + answer</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <span class="route">/lender/notification</span
+                ><span class="title">Notifications</span>
+              </div>
+              <div class="card-body">
+                <ul class="item-list">
+                  <li>HeaderNav</li>
+                  <li>NotificationCenterList</li>
+                  <li>List of notifications with timestamps</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="l-menu" class="sub-section">
+          <div class="screen-full">
+            <div class="screen-header">
+              Lender Menu <small>/lender/menu</small>
+            </div>
+            <div class="screen-body">
+              <div class="section-label">UI</div>
+              <ul class="item-list">
+                <li>HeaderNav</li>
+                <li>MenuNav with navigation items</li>
+              </ul>
+              <div class="section-label">Menu Items (typical)</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-link">LINK</span> Profile Settings →
+                  <em>/profile-settings/</em>
+                </li>
+                <li>
+                  <span class="badge badge-link">LINK</span> Notification
+                  Settings → <em>/(aux)/notification-settings</em>
+                </li>
+                <li>
+                  <span class="badge badge-link">LINK</span> Terms & Conditions
+                  → <em>/(aux)/terms-and-conditions/</em>
+                </li>
+                <li>
+                  <span class="badge badge-link">LINK</span> Privacy Policy →
+                  <em>/(aux)/privacy-policy/</em>
+                </li>
+                <li><span class="badge badge-btn">BTN</span> Logout</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BORROWER -->
+      <div id="borrower" class="section">
+        <div class="tabs-bar">
+          <div
+            class="tab-chip active"
+            onclick="showSub('borrower', 'b-home', this)"
+          >
+            Home
+          </div>
+          <div class="tab-chip" onclick="showSub('borrower', 'b-loan', this)">
+            Loan
+          </div>
+          <div class="tab-chip" onclick="showSub('borrower', 'b-wallet', this)">
+            Wallet
+          </div>
+          <div
+            class="tab-chip"
+            onclick="showSub('borrower', 'b-support', this)"
+          >
+            Support / FAQ
+          </div>
+          <div class="tab-chip" onclick="showSub('borrower', 'b-menu', this)">
+            Menu
+          </div>
+        </div>
+
+        <div id="b-home" class="sub-section active">
+          <div class="screen-full">
+            <div class="screen-header">
+              Borrower Home <small>/borrower/</small>
+            </div>
+            <div class="screen-body two-col">
+              <div>
+                <div class="section-label">State: Welcome</div>
+                <ul class="item-list">
+                  <li>"Welcome, [First Name]!"</li>
+                  <li>"We're glad you're here. Let's get started."</li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "Request a loan" →
+                    <em>/borrower/loan/</em>
+                  </li>
+                </ul>
+                <div class="section-label">State: Awaiting Approval</div>
+                <ul class="item-list">
+                  <li>"Your loan request is awaiting approval."</li>
+                  <li>Currency icon</li>
+                </ul>
+                <div class="section-label">State: Approved / Has Offers</div>
+                <ul class="item-list">
+                  <li>"Your loan request has been submitted!"</li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "View my loan
+                    offers" → <em>/borrower/loan/offers</em>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <div class="section-label">State: Ready for Deposit</div>
+                <ul class="item-list">
+                  <li>"Your funds are ready for deposit!"</li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "Go to Wallet" →
+                    <em>/borrower/wallet</em>
+                  </li>
+                  <li>Wallet icon</li>
+                </ul>
+                <div class="section-label">State: Payment Progress</div>
+                <ul class="item-list">
+                  <li>"You've paid [amount]"</li>
+                  <li>Amount repaid + progress bar</li>
+                  <li>Next payment date disclaimer</li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "View my payments"
+                  </li>
+                </ul>
+                <div class="section-label">State: Needs Bank Link</div>
+                <ul class="item-list">
+                  <li>Alert icon + description</li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "Verify my account"
+                    → Plaid / SSN
+                  </li>
+                </ul>
+                <div class="section-label">Bottom (all states)</div>
+                <ul class="item-list">
+                  <li>FrelloEffect educational carousel</li>
+                  <li>FrelloInAction timeline</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="b-loan" class="sub-section">
+          <div class="grid-wide">
+            <div class="screen-full">
+              <div class="screen-header">
+                Loan Hub <small>/borrower/loan/</small>
+              </div>
+              <div class="screen-body">
+                <div class="section-label">UI</div>
+                <ul class="item-list">
+                  <li>Auto-redirects based on loan status</li>
+                  <li>Loading indicator</li>
+                  <li>
+                    Empty state: Frello icon + "Once your loan request has been
+                    approved..."
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="screen-full">
+              <div class="screen-header">
+                Loan Request <small>/borrower/loan/request</small>
+              </div>
+              <div class="screen-body">
+                <div class="section-label">Form (LoanRequest component)</div>
+                <ul class="item-list">
+                  <li>
+                    <span class="badge badge-input">INPUT</span> Loan amount
+                    (currency)
+                  </li>
+                  <li>
+                    <span class="badge badge-input">INPUT</span> Loan purpose
+                    (selection)
+                  </li>
+                  <li>
+                    <span class="badge badge-input">INPUT</span> Loan
+                    term/duration
+                  </li>
+                  <li><span class="badge badge-btn">BTN</span> Submit</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="screen-full">
+              <div class="screen-header">
+                Loan Offers <small>/borrower/loan/offers</small>
+              </div>
+              <div class="screen-body">
+                <div class="section-label">Loan Request Summary</div>
+                <ul class="item-list">
+                  <li>Amount, purpose, date</li>
+                  <li>Payment info (amount, frequency, duration)</li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "Cancel Loan
+                    Request" → confirmation dialog
+                  </li>
+                </ul>
+                <div class="section-label">Offer Tiles (per offer)</div>
+                <ul class="item-list">
+                  <li>Total payback amount</li>
+                  <li>Interest rate</li>
+                  <li>Payment terms description</li>
+                  <li>Valid through date</li>
+                  <li>"New" badge (if new)</li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "Accept offer" →
+                    confirmation modal
+                  </li>
+                </ul>
+                <div class="section-label">Controls</div>
+                <ul class="item-list">
+                  <li>
+                    Sort by: Total payback, Payback period, Interest rate,
+                    Weekly payments
+                  </li>
+                  <li>Paginator</li>
+                </ul>
+                <div class="section-label">Modals</div>
+                <ul class="item-list">
+                  <li>
+                    <span class="badge badge-modal">MODAL</span> Cancel
+                    confirmation: "I'm sure!" / "Nevermind"
+                  </li>
+                  <li>
+                    <span class="badge badge-modal">MODAL</span> Offer
+                    confirmation: details + "That's the one!" / "Cancel"
+                  </li>
+                  <li>
+                    <span class="badge badge-modal">MODAL</span> Loan agreement
+                    content + close
+                  </li>
+                  <li>
+                    <span class="badge badge-modal">MODAL</span> Accept success:
+                    "Go to Wallet" → <em>/borrower/wallet</em>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="screen-full">
+              <div class="screen-header">
+                Active Loan <small>/borrower/loan/active-loan</small>
+              </div>
+              <div class="screen-body">
+                <div class="section-label">Loan Card Shows</div>
+                <ul class="item-list">
+                  <li>Loan amount + purpose</li>
+                  <li>Remaining payments</li>
+                  <li>Acceptance date</li>
+                  <li>Repaid so far (% + remaining)</li>
+                  <li>Next payment: amount + date</li>
+                </ul>
+                <div class="section-label">Loan Details</div>
+                <ul class="item-list">
+                  <li>Interest rate, payment frequency, start date</li>
+                  <li>Number of payments, payback amount</li>
+                  <li>Base payment, origination fee</li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "View loan
+                    agreement" → modal
+                  </li>
+                </ul>
+                <div class="section-label">Help Section</div>
+                <ul class="item-list">
+                  <li>"Need Help?" — "7am - 8pm PST"</li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "See loan FAQ's" →
+                    <em>/borrower/support</em>
+                  </li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "Visit the Help
+                    Center" → <em>/borrower/support/faq/</em>
+                  </li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "Contact Us" →
+                    Intercom
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="screen-full">
+              <div class="screen-header">
+                Loan History <small>/borrower/loan/history</small>
+              </div>
+              <div class="screen-body">
+                <div class="section-label">Header</div>
+                <ul class="item-list">
+                  <li>Title: "Loan History" + back button</li>
+                  <li>"[X] loans repaid" text</li>
+                </ul>
+                <div class="section-label">Empty State</div>
+                <ul class="item-list">
+                  <li>
+                    Frello icon + "This is where you'll find your list of past
+                    loans..."
+                  </li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "View current loan"
+                    → <em>/borrower/loan/</em>
+                  </li>
+                </ul>
+                <div class="section-label">List (when has loans)</div>
+                <ul class="item-list">
+                  <li>ClosedLoanCard: amount, reason, date, status</li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "View details" →
+                    modal
+                  </li>
+                  <li>Paginator</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="screen-full">
+              <div class="screen-header">
+                Link Bank Account
+                <small>/borrower/loan/link-your-bank-account</small>
+              </div>
+              <div class="screen-body">
+                <div class="section-label">UI</div>
+                <ul class="item-list">
+                  <li>Alert icon</li>
+                  <li>
+                    "Finish account verification to finalize your loan request!"
+                  </li>
+                  <li>
+                    "Your loan request has been submitted, but we need your
+                    banking and identity information..."
+                  </li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "Verify my account"
+                    → Plaid → SSN screen
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="b-wallet" class="sub-section">
+          <div class="grid-wide">
+            <div class="screen-full">
+              <div class="screen-header">
+                Borrower Wallet <small>/borrower/wallet/</small>
+              </div>
+              <div class="screen-body two-col">
+                <div>
+                  <div class="section-label">State: No Loan</div>
+                  <ul class="item-list">
+                    <li>WalletV2 icon</li>
+                    <li>"Once you've secured a loan, come back here..."</li>
+                    <li>
+                      <span class="badge badge-btn">BTN</span> "Request a loan"
+                      → <em>/borrower/loan/</em>
+                    </li>
+                  </ul>
+                  <div class="section-label">State: Needs Bank Link</div>
+                  <ul class="item-list">
+                    <li>Alert icon + description</li>
+                    <li>
+                      <span class="badge badge-btn">BTN</span> "Verify my
+                      account"
+                    </li>
+                  </ul>
+                  <div class="section-label">State: Pending Loan</div>
+                  <ul class="item-list">
+                    <li>"Once you've secured a loan..."</li>
+                    <li>
+                      <span class="badge badge-btn">BTN</span> "See loan
+                      request" → <em>/borrower/loan/</em>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <div class="section-label">State: Ready for Deposit</div>
+                  <ul class="item-list">
+                    <li>Currency amount (large)</li>
+                    <li>"is ready to transfer to your bank!"</li>
+                    <li>
+                      <span class="badge badge-btn">BTN</span> "Transfer my
+                      funds" → modal
+                    </li>
+                  </ul>
+                  <div class="section-label">Transfer Modal</div>
+                  <ul class="item-list">
+                    <li>Account selector</li>
+                    <li>Amount display</li>
+                    <li>Instant transfer option (with fee)</li>
+                    <li>Standard transfer (1-3 business days)</li>
+                    <li><span class="badge badge-btn">BTN</span> Submit</li>
+                  </ul>
+                  <div class="section-label">Linked Bank Accounts</div>
+                  <ul class="item-list">
+                    <li>"Linked bank accounts" section</li>
+                    <li>
+                      <span class="badge badge-btn">BTN</span> "Change default"
+                      / "Add new bank"
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="screen-full">
+              <div class="screen-header">
+                Loan Balance <small>/borrower/wallet/loan-balance</small>
+              </div>
+              <div class="screen-body">
+                <div class="section-label">Loan Balance Card</div>
+                <ul class="item-list">
+                  <li>Title: "Loan Balance" + info icon</li>
+                  <li>Large amount: "Remaining balance"</li>
+                  <li>"left to pay of [original] original loan"</li>
+                  <li>Progress bar (repayment progress)</li>
+                </ul>
+                <div class="section-label">Payment Info</div>
+                <ul class="item-list">
+                  <li>
+                    "Your [amount] payment will automatically withdrawn on
+                    [date]"
+                  </li>
+                  <li>
+                    <span class="badge badge-btn">BTN</span> "Manage auto-pay" →
+                    bank account dialog
+                  </li>
+                  <li>
+                    <span class="badge badge-link">LINK</span> "See all
+                    transactions" →
+                    <em>/borrower/wallet/transaction-history/</em>
+                  </li>
+                </ul>
+                <div class="section-label">Linked Bank Accounts</div>
+                <ul class="item-list">
+                  <li>"Linked bank accounts" header</li>
+                  <li>"Change default" / "Add new bank"</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="screen-full">
+              <div class="screen-header">
+                Transaction History
+                <small>/borrower/wallet/transaction-history/</small>
+              </div>
+              <div class="screen-body">
+                <div class="section-label">UI</div>
+                <ul class="item-list">
+                  <li>TransactionHistoryLayout (role: BORROWER)</li>
+                  <li>List of transactions with amounts, dates, types</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="b-support" class="sub-section">
+          <div class="grid">
+            <div class="card">
+              <div class="card-header">
+                <span class="route">/borrower/support/</span
+                ><span class="title">Help Center</span>
+              </div>
+              <div class="card-body">
+                <ul class="item-list">
+                  <li>HelpCenterLayout — categories + contact CTA</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <span class="route">/borrower/support/faq/</span
+                ><span class="title">FAQ List</span>
+              </div>
+              <div class="card-body">
+                <ul class="item-list">
+                  <li>FaqListLayout — FAQ categories</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <span class="route">/borrower/support/faq/[category]</span
+                ><span class="title">FAQ Category</span>
+              </div>
+              <div class="card-body">
+                <ul class="item-list">
+                  <li>FAQCategoryLayout — questions in category</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <span class="route">/borrower/support/faq/detail/</span
+                ><span class="title">FAQ Detail</span>
+              </div>
+              <div class="card-body">
+                <ul class="item-list">
+                  <li>FAQDetailLayout — full answer</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <span class="route">/borrower/notification</span
+                ><span class="title">Notifications</span>
+              </div>
+              <div class="card-body">
+                <ul class="item-list">
+                  <li>NotificationCenterList component</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="b-menu" class="sub-section">
+          <div class="screen-full">
+            <div class="screen-header">
+              Borrower Menu <small>/borrower/menu</small>
+            </div>
+            <div class="screen-body">
+              <div class="section-label">Header</div>
+              <ul class="item-list">
+                <li>Score component (Frello Score badge)</li>
+              </ul>
+              <div class="section-label">Menu Items</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-link">LINK</span> Profile Settings →
+                  <em>/profile-settings/</em>
+                </li>
+                <li>
+                  <span class="badge badge-link">LINK</span> Notification
+                  Settings → <em>/(aux)/notification-settings</em>
+                </li>
+                <li>
+                  <span class="badge badge-link">LINK</span> Loan History →
+                  <em>/borrower/loan/history</em>
+                </li>
+                <li>
+                  <span class="badge badge-link">LINK</span> Terms & Conditions
+                </li>
+                <li>
+                  <span class="badge badge-link">LINK</span> Privacy Policy
+                </li>
+                <li><span class="badge badge-btn">BTN</span> Logout</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROFILE -->
+      <div id="profile" class="section">
+        <h2>Profile & Settings</h2>
+        <div class="grid-wide">
+          <div class="screen-full">
+            <div class="screen-header">
+              Profile Settings Index <small>/profile-settings/</small>
+            </div>
+            <div class="screen-body">
+              <div class="section-label">Sections rendered</div>
+              <ul class="item-list">
+                <li>EditProfile component</li>
+                <li>ChangePassword component</li>
+                <li>ManageSubscription (lenders only)</li>
+                <li>AccountDeletion component</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="screen-full">
+            <div class="screen-header">
+              Edit Profile <small>/profile-settings/editProfile</small>
+            </div>
+            <div class="screen-body">
+              <div class="section-label">Card Display</div>
+              <ul class="item-list">
+                <li>User icon</li>
+                <li>Current name</li>
+                <li>Member since date</li>
+                <li>Phone icon + mobile number</li>
+                <li>Email icon + email address</li>
+                <li>
+                  <span class="badge badge-btn">BTN</span> Edit → opens modal
+                </li>
+              </ul>
+              <div class="section-label">Edit Modal Form</div>
+              <ul class="item-list">
+                <li>Title: "Edit Profile"</li>
+                <li>"*Your identity will not be publicized in the app."</li>
+                <li><span class="badge badge-input">INPUT</span> First name</li>
+                <li><span class="badge badge-input">INPUT</span> Last name</li>
+                <li>
+                  <span class="badge badge-input">INPUT</span> Mobile Number
+                  (phone)
+                </li>
+                <li>
+                  <span class="badge badge-input">INPUT</span> Email address
+                </li>
+                <li><span class="badge badge-btn">BTN</span> "Save Profile"</li>
+              </ul>
+              <div class="section-label">
+                OTP Verification (if phone changed)
+              </div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-input">INPUT</span> OTP 6-digit entry
+                </li>
+                <li><span class="badge badge-link">LINK</span> Resend code</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="screen-full">
+            <div class="screen-header">
+              Change Password <small>/profile-settings/changePassword</small>
+            </div>
+            <div class="screen-body">
+              <div class="section-label">Card Display</div>
+              <ul class="item-list">
+                <li>Key icon</li>
+                <li>Title: "Password"</li>
+                <li>Masked display: "**************"</li>
+                <li>
+                  <span class="badge badge-btn">BTN</span> "Change Password" →
+                  modal
+                </li>
+              </ul>
+              <div class="section-label">Change Password Modal Form</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-input">INPUT</span> Current password
+                </li>
+                <li>
+                  <span class="badge badge-input">INPUT</span> New password +
+                  validation list
+                </li>
+                <li>
+                  <span class="badge badge-input">INPUT</span> Confirm new
+                  password
+                </li>
+                <li><span class="badge badge-btn">BTN</span> "Continue"</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="screen-full">
+            <div class="screen-header">
+              Manage Subscription
+              <small>/profile-settings/manageSubscription (lenders)</small>
+            </div>
+            <div class="screen-body">
+              <div class="section-label">Card Display</div>
+              <ul class="item-list">
+                <li>Badge icon</li>
+                <li>Title: "Subscribed" or "Unsubscribed"</li>
+                <li>Disclaimer if unsubscribed by app store</li>
+                <li>
+                  <span class="badge badge-btn">BTN</span> "Manage Preferred
+                  Lender subscription" → modal
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="screen-full">
+            <div class="screen-header">
+              OTP Verification <small>/profile-settings/otpVerification</small>
+            </div>
+            <div class="screen-body">
+              <div class="section-label">UI</div>
+              <ul class="item-list">
+                <li>
+                  <span class="badge badge-input">INPUT</span> OTP 6-digit entry
+                </li>
+                <li><span class="badge badge-link">LINK</span> Resend code</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUX -->
+      <div id="aux" class="section">
+        <h2>Auxiliary Screens</h2>
+        <div class="grid">
+          <div class="card">
+            <div class="card-header">
+              <span class="route">/(aux)/notification-settings</span
+              ><span class="title">Notification Settings</span>
+            </div>
+            <div class="card-body">
+              <div class="section-label">Header</div>
+              <ul class="item-list">
+                <li>HeaderNav: "Notification Settings"</li>
+                <li>Title: "Notifications"</li>
+              </ul>
+              <div class="section-label">Toggles</div>
+              <ul class="item-list">
+                <li>Toggle: "Allow push notifications"</li>
+                <li>Toggle: "Allow email notifications"</li>
+              </ul>
+              <div class="section-label">Feedback</div>
+              <ul class="item-list">
+                <li>Snackbar (success, bottom) on save</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="route">/(aux)/privacy-policy/</span
+              ><span class="title">Privacy Policy</span>
+            </div>
+            <div class="card-body">
+              <div class="section-label">UI</div>
+              <ul class="item-list">
+                <li>ScrollView</li>
+                <li>Markdown rendered content</li>
+                <li>Loading indicator while fetching</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="route">/(aux)/terms-and-conditions/</span
+              ><span class="title">Terms & Conditions</span>
+            </div>
+            <div class="card-body">
+              <div class="section-label">UI</div>
+              <ul class="item-list">
+                <li>ScrollView</li>
+                <li>Markdown rendered content</li>
+                <li>Loading indicator while fetching</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="route">/(aux)/linked-bank-accounts/</span
+              ><span class="title">Linked Bank Accounts</span>
+            </div>
+            <div class="card-body">
+              <div class="section-label">UI</div>
+              <ul class="item-list">
+                <li>Header with "Change default" CTA</li>
+                <li>
+                  <span class="badge badge-btn">BTN</span> "Add new bank" →
+                  Plaid
+                </li>
+                <li>List of linked bank accounts</li>
+                <li>SelectDefaultBankAccountDialog</li>
+                <li>Loading indicator</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function showSection(id, btn) {
+        document
+          .querySelectorAll(".section")
+          .forEach((s) => s.classList.remove("active"));
+        document
+          .querySelectorAll("nav button")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+        btn.classList.add("active");
+      }
+
+      function showSub(group, id, chip) {
+        document
+          .querySelectorAll("#" + group + " .sub-section")
+          .forEach((s) => s.classList.remove("active"));
+        document
+          .querySelectorAll("#" + group + " .tab-chip")
+          .forEach((c) => c.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+        chip.classList.add("active");
+      }
+    </script>
+  </body>
+</html>

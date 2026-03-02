@@ -61,15 +61,15 @@ export default function LoanRequestBidCard({
     >
       {/* Amount Requested */}
       <Box marginBottom="m">
-        <Text variant="caption" marginBottom="xs">
-          Cantidad Solicitada
+        <Text variant="subtitle" color="black" marginBottom="xs">
+          CANTIDAD SOLICITADA
         </Text>
         <Text
           variant="header"
           style={{
             fontSize: 32,
             fontFamily: "Quicksand-Bold",
-            color: theme.colors.primary,
+            color: theme.colors.black,
           }}
         >
           S/{" "}
@@ -88,7 +88,7 @@ export default function LoanRequestBidCard({
         {/* Loan Reason */}
         <Box flexDirection="row" alignItems="center" gap="m">
           <Box
-            backgroundColor="tertiary"
+            backgroundColor="primary"
             borderRadius={8}
             padding="s"
             width={40}
@@ -96,7 +96,7 @@ export default function LoanRequestBidCard({
             alignItems="center"
             justifyContent="center"
           >
-            <Icon name={reasonData.icon} size={20} color="primary" />
+            <Icon name={reasonData.icon} size={20} color="darkNavyBlue" />
           </Box>
           <Box flex={1}>
             <Text variant="caption" marginBottom="xs">
@@ -143,7 +143,7 @@ export default function LoanRequestBidCard({
                 variant="body"
                 style={{
                   fontFamily: "Quicksand-SemiBold",
-                  color: theme.colors.primary,
+                  color: theme.colors.black,
                 }}
               >
                 / 100
@@ -152,7 +152,7 @@ export default function LoanRequestBidCard({
           </Box>
 
           {/* Number of Payments */}
-          <Box flex={1}>
+          <Box flex={1} alignItems="flex-end">
             <Text variant="caption" marginBottom="xs">
               Cuotas
             </Text>
@@ -160,7 +160,7 @@ export default function LoanRequestBidCard({
               variant="subheader"
               style={{
                 fontFamily: "Quicksand-Bold",
-                color: theme.colors.primary,
+                color: theme.colors.black,
               }}
             >
               {numberOfPayments} {numberOfPayments === 1 ? "mes" : "meses"}
@@ -171,7 +171,7 @@ export default function LoanRequestBidCard({
 
       {/* CTA Button */}
       <Button variant="primary" fullWidth onPress={onPlaceBid}>
-        Place Bid
+        PLACE BID
       </Button>
     </Box>
   );
