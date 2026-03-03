@@ -10,6 +10,7 @@ import { mockCardStepperData } from "@/components/ui/CardsStepper/mockCardSteppe
 import ScreenHeader from "@/components/ui/ScreenHeader/ScreenHeader";
 import { mockLoanRequests } from "@/data/mockLoanRequests";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { ScrollView } from "react-native";
 
 const cardStepper = mockCardStepperData;
@@ -58,11 +59,12 @@ export default function LoanOfferScreen() {
 
   return (
     <ScrollView style={{ flex: 1 }}>
+      <StatusBar style="light" />
       <ScreenHeader
         title="Hacer Oferta"
         subtitle="Crea una oferta para esta solicitud de préstamo"
         onBack={() => router.back()}
-        variant="white"
+        variant="black"
       />
 
       <Box flex={1} padding="l" gap="l" backgroundColor="mainBackground">

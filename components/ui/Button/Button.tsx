@@ -18,7 +18,8 @@ type ButtonVariant =
   | "black"
   | "gray"
   | "navy"
-  | "outlineBlack";
+  | "outlineBlack"
+  | "outlineGray";
 type ButtonSize = "small" | "medium" | "large";
 type IconPosition = "left" | "right";
 
@@ -112,6 +113,11 @@ const variantConfig: Record<
     textColor: "buttonOutlineBlackText",
     borderColor: "buttonOutlineBlackText",
   },
+  outlineGray: {
+    backgroundColor: "buttonBlackText",
+    textColor: "buttonGray",
+    borderColor: "buttonGray",
+  },
 };
 
 export default function Button({
@@ -179,6 +185,7 @@ export default function Button({
         borderWidth={
           variant === "fourty" ||
           variant === "outline" ||
+          variant === "outlineGray" ||
           variant === "primary" ||
           variant === "outlineBlack"
             ? 2

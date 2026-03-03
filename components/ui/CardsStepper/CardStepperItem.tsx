@@ -152,7 +152,7 @@ export default function CardStepperItem({
               {!isFirst && (
                 <View style={{ flex: 1 }}>
                   <Button
-                    variant="outline"
+                    variant="outlineGray"
                     fullWidth
                     onPress={goToPreviousStep}
                   >

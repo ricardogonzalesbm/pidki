@@ -27,7 +27,7 @@ const variantConfig: Record<ScreenHeaderVariant, VariantConfig> = {
   },
   black: {
     backgroundColor: colors.darkNavyBlue,
-    iconBackground: "rgba(255, 255, 255, 0.15)",
+    iconBackground: colors.darkNavyBlue,
     iconColor: colors.primary,
     titleColor: colors.white,
     subtitleColor: colors.gray300,

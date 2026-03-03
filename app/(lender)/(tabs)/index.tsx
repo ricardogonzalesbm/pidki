@@ -3,6 +3,7 @@ import Text from "@/components/Text";
 import LoanRequestBidCard from "@/components/ui/LoanRequestBidCard/LoanRequestBidCard";
 import { mockLoanRequests } from "@/data/mockLoanRequests";
 import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { ScrollView, TouchableOpacity } from "react-native";
 
 export default function LenderMarketplaceScreen() {
@@ -17,6 +18,7 @@ export default function LenderMarketplaceScreen() {
 
   return (
     <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
+      <StatusBar style="dark" />
       <Box flex={1} padding="l" backgroundColor="mainBackground">
         {/* Header */}
         <Box marginTop="xl" marginBottom="l">
