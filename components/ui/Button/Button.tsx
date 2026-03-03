@@ -16,6 +16,7 @@ type ButtonVariant =
   | "danger"
   | "warning"
   | "black"
+  | "gray"
   | "navy"
   | "outlineBlack";
 type ButtonSize = "small" | "medium" | "large";
@@ -65,6 +66,7 @@ const variantConfig: Record<
   primary: {
     backgroundColor: "buttonPrimary",
     textColor: "buttonPrimaryText",
+    borderColor: "buttonPrimary",
   },
   secondary: {
     backgroundColor: "buttonSecondary",
@@ -95,6 +97,10 @@ const variantConfig: Record<
   },
   black: {
     backgroundColor: "buttonBlack",
+    textColor: "buttonBlackText",
+  },
+  gray: {
+    backgroundColor: "buttonGray",
     textColor: "buttonBlackText",
   },
   navy: {
@@ -170,7 +176,14 @@ export default function Button({
         flexDirection="row"
         alignItems="center"
         justifyContent="center"
-        borderWidth={variant === "fourty" || variant === "outline" || variant === "outlineBlack" ? 2 : 0}
+        borderWidth={
+          variant === "fourty" ||
+          variant === "outline" ||
+          variant === "primary" ||
+          variant === "outlineBlack"
+            ? 2
+            : 0
+        }
         borderColor={variantStyles.borderColor}
       >
         {(icon || loading) && iconPosition === "left" && renderIcon()}

@@ -50,6 +50,7 @@ const theme = createTheme({
     buttonDangerText: palette.white,
     buttonWarning: palette.yellow500,
     buttonWarningText: palette.white,
+    buttonGray: palette.gray500,
     buttonBlack: palette.black,
     buttonBlackText: palette.white,
     buttonNavy: palette.darkNavyBlue,

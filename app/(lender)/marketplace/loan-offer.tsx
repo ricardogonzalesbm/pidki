@@ -1,15 +1,44 @@
 import Box from "@/components/Box";
 import Text from "@/components/Text";
+import CardsStepper, {
+  CardStepperItemConfig,
+} from "@/components/ui/CardsStepper/CardsStepper";
+import ContentX from "@/components/ui/CardsStepper/ContentX";
+import ContentY from "@/components/ui/CardsStepper/ContentY";
+import ContentZ from "@/components/ui/CardsStepper/ContentZ";
+import { mockCardStepperData } from "@/components/ui/CardsStepper/mockCardStepperData";
 import ScreenHeader from "@/components/ui/ScreenHeader/ScreenHeader";
 import { mockLoanRequests } from "@/data/mockLoanRequests";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView } from "react-native";
 
+const cardStepper = mockCardStepperData;
+
+const stepperItems: CardStepperItemConfig[] = [
+  {
+    step: { number: 1, label: cardStepper["1"].label },
+    title: cardStepper["1"].title,
+    isSubmittable: true,
+    ChildComponent: ContentX,
+  },
+  {
+    step: { number: 2, label: cardStepper["2"].label },
+    title: cardStepper["2"].title,
+    isSubmittable: true,
+    ChildComponent: ContentY,
+  },
+  {
+    step: { number: 3, label: cardStepper["3"].label },
+    title: cardStepper["3"].title,
+    isSubmittable: true,
+    ChildComponent: ContentZ,
+  },
+];
+
 export default function LoanOfferScreen() {
   const router = useRouter();
   const { loanRequestId } = useLocalSearchParams();
 
-  // Find the loan request by ID
   const loanRequest = mockLoanRequests.find(
     (request) => request.id === loanRequestId,
   );
@@ -36,78 +65,9 @@ export default function LoanOfferScreen() {
         variant="white"
       />
 
-      <Box flex={1} padding="l" backgroundColor="mainBackground">
-        {/* Loan Request Summary */}
-        <Box padding="l" backgroundColor="white" borderRadius={16}>
-          <Text
-            variant="body"
-            marginBottom="m"
-            style={{
-              fontFamily: "PlusJakartaSans-SemiBold",
-              fontSize: 18,
-            }}
-          >
-            Detalles de la Solicitud
-          </Text>
-
-          <Box gap="s">
-            <Box flexDirection="row" justifyContent="space-between">
-              <Text variant="body" color="textSecondary">
-                Prestatario:
-              </Text>
-              <Text
-                variant="body"
-                style={{ fontFamily: "PlusJakartaSans-SemiBold" }}
-              >
-                {loanRequest.borrowerName}
-              </Text>
-            </Box>
-
-            <Box flexDirection="row" justifyContent="space-between">
-              <Text variant="body" color="textSecondary">
-                Monto Solicitado:
-              </Text>
-              <Text
-                variant="body"
-                style={{ fontFamily: "PlusJakartaSans-SemiBold" }}
-              >
-                S/ {loanRequest.amountRequested.toFixed(2)}
-              </Text>
-            </Box>
-
-            <Box flexDirection="row" justifyContent="space-between">
-              <Text variant="body" color="textSecondary">
-                Pidki Score:
-              </Text>
-              <Text
-                variant="body"
-                style={{ fontFamily: "PlusJakartaSans-SemiBold" }}
-              >
-                {loanRequest.userScore} / 100
-              </Text>
-            </Box>
-
-            <Box flexDirection="row" justifyContent="space-between">
-              <Text variant="body" color="textSecondary">
-                Cuotas:
-              </Text>
-              <Text
-                variant="body"
-                style={{ fontFamily: "PlusJakartaSans-SemiBold" }}
-              >
-                {loanRequest.numberOfPayments}{" "}
-                {loanRequest.numberOfPayments === 1 ? "mes" : "meses"}
-              </Text>
-            </Box>
-          </Box>
-        </Box>
-
-        {/* TODO: Add form to create loan offer */}
-        <Box marginTop="l">
-          <Text variant="body" color="textSecondary">
-            [Formulario de oferta de préstamo - próximamente]
-          </Text>
-        </Box>
+      <Box flex={1} padding="l" gap="l" backgroundColor="mainBackground">
+        {/* Offer Stepper */}
+        <CardsStepper items={stepperItems} />
       </Box>
     </ScrollView>
   );
