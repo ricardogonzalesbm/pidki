@@ -68,7 +68,6 @@ export default function LoanOfferScreen() {
       />
 
       <Box flex={1} padding="l" gap="l" backgroundColor="mainBackground">
-        {/* Offer Stepper */}
         <CardsStepper items={stepperItems} />
       </Box>
     </ScrollView>
