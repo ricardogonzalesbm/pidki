@@ -107,6 +107,11 @@ const theme = createTheme({
       fontFamily: "Quicksand-Regular",
       color: "textPrimary",
     },
+    bodyBold: {
+      fontSize: 18,
+      fontFamily: "Quicksand-Bold",
+      color: "textPrimary",
+    },
     subtitle: {
       fontSize: 12,
       fontFamily: "Quicksand-Regular",

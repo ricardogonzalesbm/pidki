@@ -77,34 +77,37 @@ export default function Select({
     <>
       <Box>
         {label && (
-          <Text variant="body" marginBottom="xs" style={{ fontFamily: "Quicksand-Regular" }}>
+          <Text
+            variant="body"
+            marginBottom="m"
+            style={{ fontFamily: "Quicksand-Regular" }}
+          >
             {label}
           </Text>
         )}
         <TouchableOpacity onPress={openModal} activeOpacity={0.7}>
           <Box
-            backgroundColor="mainBackground"
             borderRadius={12}
             borderWidth={1}
-            borderColor="border"
+            borderColor="black"
             paddingHorizontal="m"
             paddingVertical="m"
             flexDirection="row"
             justifyContent="space-between"
             alignItems="center"
+            backgroundColor="gray100"
           >
             <Text
               variant="body"
               style={{
                 fontFamily: "Quicksand-SemiBold",
-                color: selectedOption
-                  ? theme.colors.buttonPrimary
-                  : theme.colors.primary,
+                fontWeight: "bold",
+                color: theme.colors.black,
               }}
             >
               {selectedOption ? selectedOption.label : placeholder}
             </Text>
-            <Icon name="ChevronDown" size={20} color="primary" />
+            <Icon name="ChevronDown" size={20} color="black" />
           </Box>
         </TouchableOpacity>
       </Box>
@@ -142,7 +145,7 @@ export default function Select({
               bottomSheetStyle,
             ]}
           >
-            <Box padding="l">
+            <Box padding="l" backgroundColor="black">
               <Box alignItems="center" marginBottom="m" paddingVertical="xs">
                 <Box
                   width={40}
@@ -154,6 +157,7 @@ export default function Select({
 
               <Text
                 variant="subheader"
+                color="white"
                 marginBottom="m"
                 style={{ fontFamily: "Quicksand-SemiBold" }}
               >
@@ -174,7 +178,7 @@ export default function Select({
                     >
                       <Box
                         backgroundColor={
-                          isSelected ? "buttonPrimary" : "gray100"
+                          isSelected ? "buttonPrimary" : "gray600"
                         }
                         padding="m"
                         borderRadius={12}
@@ -184,11 +188,10 @@ export default function Select({
                         alignItems="center"
                       >
                         <Text
-                          variant="body"
+                          variant="bodyBold"
                           style={{
-                            fontFamily: "Quicksand-SemiBold",
                             color: isSelected
-                              ? theme.colors.buttonPrimaryText
+                              ? theme.colors.black
                               : theme.colors.buttonPrimary,
                           }}
                         >

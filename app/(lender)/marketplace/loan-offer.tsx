@@ -1,38 +1,50 @@
+import { LoanTerm } from "@/components/author/LoanOffer/LoanTerm/LoanTerm";
+import { RateOfReturn } from "@/components/author/LoanOffer/RateOfReturn/RateOfReturn";
+import { ReviewConfirm } from "@/components/author/LoanOffer/ReviewConfirm/ReviewConfirm";
 import Box from "@/components/Box";
 import Text from "@/components/Text";
 import CardsStepper, {
   CardStepperItemConfig,
 } from "@/components/ui/CardsStepper/CardsStepper";
-import ContentX from "@/components/ui/CardsStepper/ContentX";
-import ContentY from "@/components/ui/CardsStepper/ContentY";
-import ContentZ from "@/components/ui/CardsStepper/ContentZ";
-import { mockCardStepperData } from "@/components/ui/CardsStepper/mockCardStepperData";
 import ScreenHeader from "@/components/ui/ScreenHeader/ScreenHeader";
 import { mockLoanRequests } from "@/data/mockLoanRequests";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { ScrollView } from "react-native";
 
-const cardStepper = mockCardStepperData;
+const cardStepper = {
+  "1": {
+    label: "Paso 1",
+    title: "Retorno de interés",
+  },
+  "2": {
+    label: "Paso 2",
+    title: "Ofertar",
+  },
+  "3": {
+    label: "Paso 3",
+    title: "Confirmar",
+  },
+};
 
 const stepperItems: CardStepperItemConfig[] = [
   {
     step: { number: 1, label: cardStepper["1"].label },
     title: cardStepper["1"].title,
     isSubmittable: true,
-    ChildComponent: ContentX,
+    ChildComponent: RateOfReturn,
   },
   {
     step: { number: 2, label: cardStepper["2"].label },
     title: cardStepper["2"].title,
     isSubmittable: true,
-    ChildComponent: ContentY,
+    ChildComponent: LoanTerm,
   },
   {
     step: { number: 3, label: cardStepper["3"].label },
     title: cardStepper["3"].title,
-    isSubmittable: true,
-    ChildComponent: ContentZ,
+    isSubmittable: false,
+    ChildComponent: ReviewConfirm,
   },
 ];
 

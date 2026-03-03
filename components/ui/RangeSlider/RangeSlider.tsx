@@ -104,7 +104,6 @@ export default function RangeSlider({
           justifyContent="center"
           onLayout={handleLayout}
         >
-          {/* Background track */}
           <Box
             position="absolute"
             height={TRACK_HEIGHT}
@@ -113,7 +112,6 @@ export default function RangeSlider({
             style={{ left: THUMB_SIZE / 2, right: THUMB_SIZE / 2 }}
           />
 
-          {/* Filled track */}
           <Animated.View
             style={[
               {
@@ -127,7 +125,6 @@ export default function RangeSlider({
             ]}
           />
 
-          {/* Thumb */}
           <GestureDetector gesture={gesture}>
             <Animated.View
               style={[
