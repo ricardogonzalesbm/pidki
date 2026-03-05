@@ -20,7 +20,6 @@ export default function LenderMarketplaceScreen() {
     <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
       <StatusBar style="dark" />
       <Box flex={1} padding="l" backgroundColor="mainBackground">
-        {/* Header */}
         <Box marginTop="xl" marginBottom="l">
           <Text
             variant="header"

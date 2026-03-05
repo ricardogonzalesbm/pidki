@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import CardStepperItem from "./CardStepperItem";
+import { CardStepperItem } from "./CardStepperItem";
 import { CardsStepperProvider } from "./CardsStepperContext";
 
 export interface CardStepperItemConfig {
@@ -17,7 +17,7 @@ interface CardsStepperProps {
   items: CardStepperItemConfig[];
 }
 
-export default function CardsStepper({ items }: CardsStepperProps) {
+export const CardsStepper = ({ items }: CardsStepperProps) => {
   return (
     <CardsStepperProvider totalSteps={items.length}>
       <View>
@@ -37,4 +37,4 @@ export default function CardsStepper({ items }: CardsStepperProps) {
       </View>
     </CardsStepperProvider>
   );
-}
+};

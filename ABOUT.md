@@ -13,3 +13,12 @@ The app will allow borrowers to select a reason for why they are requesting a lo
 Users will be able to request a loan or make a loan offer if they pass third-party qualification.
 
 Pidki will connect people, giving them the opportunity to create a business by lending and borrowing money.
+
+Lender Flow:
+
+1.
+
+Borrower Flow:
+
+1. Borrower creates a Loan Request.
+2.

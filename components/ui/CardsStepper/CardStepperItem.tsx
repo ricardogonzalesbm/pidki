@@ -20,7 +20,7 @@ interface CardStepperItemProps {
   isLast: boolean;
 }
 
-export default function CardStepperItem({
+export const CardStepperItem = ({
   stepNumber,
   totalSteps,
   stepLabel,
@@ -29,7 +29,7 @@ export default function CardStepperItem({
   ChildComponent,
   isFirst,
   isLast,
-}: CardStepperItemProps) {
+}: CardStepperItemProps) => {
   const { activeStep, stepsSubmitted, submitActiveStep, goToPreviousStep } =
     useCardsStepper();
 
@@ -175,4 +175,4 @@ export default function CardStepperItem({
       )}
     </View>
   );
-}
+};

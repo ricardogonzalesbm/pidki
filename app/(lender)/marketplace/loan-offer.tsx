@@ -3,12 +3,13 @@ import { RateOfReturn } from "@/components/author/LoanOffer/RateOfReturn/RateOfR
 import { ReviewConfirm } from "@/components/author/LoanOffer/ReviewConfirm/ReviewConfirm";
 import Box from "@/components/Box";
 import Text from "@/components/Text";
-import CardsStepper, {
+import {
+  CardsStepper,
   CardStepperItemConfig,
 } from "@/components/ui/CardsStepper/CardsStepper";
-import ScreenHeader from "@/components/ui/ScreenHeader/ScreenHeader";
+import HeaderNav from "@/components/ui/HeaderNav/HeaderNav";
 import { mockLoanRequests } from "@/data/mockLoanRequests";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { ScrollView } from "react-native";
 
@@ -49,7 +50,6 @@ const stepperItems: CardStepperItemConfig[] = [
 ];
 
 export default function LoanOfferScreen() {
-  const router = useRouter();
   const { loanRequestId } = useLocalSearchParams();
 
   const loanRequest = mockLoanRequests.find(
@@ -59,7 +59,7 @@ export default function LoanOfferScreen() {
   if (!loanRequest) {
     return (
       <ScrollView style={{ flex: 1 }}>
-        <ScreenHeader title="Error" onBack={() => router.back()} />
+        <HeaderNav title="Error" isBackButtonEnforced />
         <Box flex={1} padding="l" backgroundColor="mainBackground">
           <Text variant="body" marginTop="m">
             Solicitud de préstamo no encontrada
@@ -72,11 +72,10 @@ export default function LoanOfferScreen() {
   return (
     <ScrollView style={{ flex: 1 }}>
       <StatusBar style="light" />
-      <ScreenHeader
+      <HeaderNav
         title="Hacer Oferta"
-        subtitle="Crea una oferta para esta solicitud de préstamo"
-        onBack={() => router.back()}
         variant="black"
+        isBackButtonEnforced
       />
 
       <Box flex={1} padding="l" gap="l" backgroundColor="mainBackground">
