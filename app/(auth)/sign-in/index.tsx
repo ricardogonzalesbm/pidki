@@ -47,7 +47,7 @@ export default function SignInScreen() {
       // Simulate API call
       setTimeout(() => {
         setLoading(false);
-        router.replace("/(lender)/(tabs)");
+        router.replace("/(borrower)/(tabs)");
       }, 1500);
     } catch (error) {
       if (error instanceof ValidationError) {
