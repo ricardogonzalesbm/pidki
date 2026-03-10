@@ -84,20 +84,20 @@ export default function SignUpScreen() {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1, backgroundColor: "#F3F4F6" }}
+      style={{ flex: 1, backgroundColor: "#18233a" }}
     >
       <ScrollView
-        style={{ flex: 1 }}
+        style={{ flex: 1, backgroundColor: "#F3F4F6" }}
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
       >
         <StatusBar style="dark" />
-        {/* Layer 1: mainBackground with logo */}
         <Box
           backgroundColor="mainBackground"
           alignItems="center"
-          paddingVertical="xl"
-          marginTop="l"
+          paddingTop="xl"
+          paddingBottom="xl"
+          style={{ paddingTop: 72 }}
         >
           <Goal size={100} color={theme.colors.darkPrimary} strokeWidth={1.5} />
           <Text variant="header" marginTop="s">
@@ -112,6 +112,24 @@ export default function SignUpScreen() {
           padding="l"
           style={{ borderTopLeftRadius: 28, borderTopRightRadius: 28 }}
         >
+          {/* Header */}
+          <Box paddingBottom="xl">
+            <Text variant="bodyBold" color="white" style={{ fontSize: 28 }}>
+              Crea tu cuenta
+            </Text>
+            <Text
+              variant="body"
+              color="secondary"
+              style={{
+                fontSize: 14,
+                fontFamily: "PlusJakartaSans-Regular",
+                marginTop: 4,
+              }}
+            >
+              Unete a la comunidad de ahorradores.
+            </Text>
+          </Box>
+
           {/* Name Field */}
           <TextField
             label="Nombre Completo"
