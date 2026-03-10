@@ -8,6 +8,7 @@ interface CardsStepperContextValue {
   payload: StepPayload;
   submitStep: (stepNumber: number, stepPayload?: StepPayload) => void;
   submitActiveStep: (stepPayload?: StepPayload) => void;
+  updatePayload: (partialPayload: StepPayload) => void;
   goToPreviousStep: () => void;
   resetCardStepper: () => void;
 }
@@ -48,6 +49,10 @@ export function CardsStepperProvider({ children, totalSteps }: CardsStepperProvi
     }
   }, [activeStep]);
 
+  const updatePayload = useCallback((partialPayload: StepPayload) => {
+    setPayload((prev) => ({ ...prev, ...partialPayload }));
+  }, []);
+
   const resetCardStepper = useCallback(() => {
     setActiveStep(1);
     setStepsSubmitted([]);
@@ -56,7 +61,7 @@ export function CardsStepperProvider({ children, totalSteps }: CardsStepperProvi
 
   return (
     <CardsStepperContext.Provider
-      value={{ activeStep, stepsSubmitted, payload, submitStep, submitActiveStep, goToPreviousStep, resetCardStepper }}
+      value={{ activeStep, stepsSubmitted, payload, submitStep, submitActiveStep, updatePayload, goToPreviousStep, resetCardStepper }}
     >
       {children}
     </CardsStepperContext.Provider>

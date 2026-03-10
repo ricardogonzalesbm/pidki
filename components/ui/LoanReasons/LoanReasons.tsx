@@ -1,6 +1,7 @@
 import Box from "@/components/Box";
 import Icon from "@/components/Icon";
 import Text from "@/components/Text";
+import theme from "@/theme";
 import { icons } from "lucide-react-native";
 import React from "react";
 import { TouchableOpacity } from "react-native";
@@ -44,12 +45,7 @@ export default function LoanReasons({
   selectedReason,
 }: LoanReasonsProps) {
   return (
-    <Box
-      flexDirection="row"
-      flexWrap="wrap"
-      gap="m"
-      justifyContent="space-between"
-    >
+    <Box gap="s">
       {loanReasons.map((reason) => {
         const isSelected = selectedReason === reason.id;
         return (
@@ -57,36 +53,36 @@ export default function LoanReasons({
             key={reason.id}
             onPress={() => onSelectReason?.(reason.id)}
             activeOpacity={0.7}
-            style={{ width: "30%" }}
           >
             <Box
-              backgroundColor={isSelected ? "buttonPrimary" : "tertiary"}
-              borderRadius={12}
-              padding="m"
+              flexDirection="row"
               alignItems="center"
-              justifyContent="center"
-              minHeight={100}
-              borderWidth={isSelected ? 2 : 0}
-              borderColor={isSelected ? "buttonPrimary" : undefined}
+              justifyContent="space-between"
+              borderRadius={12}
+              paddingHorizontal="m"
+              paddingVertical="m"
+              borderWidth={1.5}
+              borderColor={isSelected ? "buttonPrimary" : "gray200"}
+              backgroundColor={isSelected ? "buttonPrimary" : "white"}
             >
-              <Icon
-                name={reason.icon}
-                size={32}
-                color={isSelected ? "buttonPrimaryText" : "textPrimary"}
-              />
               <Text
-                variant="caption"
-                marginTop="xs"
+                variant="body"
                 style={{
-                  textAlign: "center",
                   fontFamily: isSelected
                     ? "Quicksand-SemiBold"
                     : "Quicksand-Regular",
-                  color: isSelected ? "#FFFFFF" : "textPrimary",
+                  color: isSelected
+                    ? theme.colors.darkNavyBlue
+                    : theme.colors.gray800,
                 }}
               >
                 {reason.label}
               </Text>
+              <Icon
+                name={reason.icon}
+                size={26}
+                color={isSelected ? "black" : "gray400"}
+              />
             </Box>
           </TouchableOpacity>
         );

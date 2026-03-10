@@ -1,4 +1,7 @@
 import LoanAmount from "@/components/author/LoanRequest/LoanAmount/LoanAmount";
+import LoanPayback from "@/components/author/LoanRequest/LoanPayback/LoanPayback";
+import Reason from "@/components/author/LoanRequest/Reason/Reason";
+import ReviewConfirm from "@/components/author/LoanRequest/ReviewConfirm/ReviewConfirm";
 import Box from "@/components/Box";
 import {
   CardsStepper,
@@ -11,19 +14,19 @@ import { ScrollView } from "react-native";
 const cardStepper = {
   "1": {
     label: "Paso 1",
-    title: "LoanAmount",
+    title: "Monto",
   },
   "2": {
     label: "Paso 2",
-    title: "LoanPayback",
+    title: "Devolución",
   },
   "3": {
     label: "Paso 3",
-    title: "Reason",
+    title: "Motivo",
   },
   "4": {
     label: "Paso 4",
-    title: "ReviewConfirm",
+    title: "Confirmación",
   },
 };
 
@@ -33,6 +36,24 @@ const stepperItems: CardStepperItemConfig[] = [
     title: cardStepper["1"].title,
     isSubmittable: true,
     ChildComponent: LoanAmount,
+  },
+  {
+    step: { number: 2, label: cardStepper["2"].label },
+    title: cardStepper["2"].title,
+    isSubmittable: true,
+    ChildComponent: LoanPayback,
+  },
+  {
+    step: { number: 3, label: cardStepper["3"].label },
+    title: cardStepper["3"].title,
+    isSubmittable: true,
+    ChildComponent: Reason,
+  },
+  {
+    step: { number: 4, label: cardStepper["4"].label },
+    title: cardStepper["4"].title,
+    isSubmittable: false,
+    ChildComponent: ReviewConfirm,
   },
 ];
 
