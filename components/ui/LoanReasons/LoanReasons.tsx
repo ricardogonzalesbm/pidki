@@ -63,17 +63,17 @@ export default function LoanReasons({
               paddingVertical="m"
               borderWidth={1.5}
               borderColor={isSelected ? "buttonPrimary" : "gray200"}
-              backgroundColor={isSelected ? "buttonPrimary" : "white"}
+              backgroundColor={isSelected ? "buttonPrimary" : "gray200"}
             >
               <Text
-                variant="body"
+                variant="bodyBold"
                 style={{
                   fontFamily: isSelected
                     ? "Quicksand-SemiBold"
                     : "Quicksand-Regular",
                   color: isSelected
                     ? theme.colors.darkNavyBlue
-                    : theme.colors.gray800,
+                    : theme.colors.black,
                 }}
               >
                 {reason.label}
@@ -81,7 +81,7 @@ export default function LoanReasons({
               <Icon
                 name={reason.icon}
                 size={26}
-                color={isSelected ? "black" : "gray400"}
+                color={isSelected ? "black" : "black"}
               />
             </Box>
           </TouchableOpacity>

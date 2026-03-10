@@ -2,8 +2,11 @@ import Box from "@/components/Box";
 import Text from "@/components/Text";
 import Button from "@/components/ui/Button/Button";
 import TextField from "@/components/ui/TextField/TextField";
+import theme from "@/theme";
 import { signInSchema } from "@/utils/validationSchemas";
 import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { Goal } from "lucide-react-native";
 import { useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { ValidationError } from "yup";
@@ -33,25 +36,18 @@ export default function SignInScreen() {
 
   const handleSignIn = async () => {
     try {
-      // Validate all fields
       await signInSchema.validate({ email, password }, { abortEarly: false });
-
-      // Clear any existing errors
       setEmailError("");
       setPasswordError("");
-
       setLoading(true);
       // TODO: Implement Cognito sign-in logic here
       console.log("Sign in with:", { email, password });
-
-      // Simulate API call
       setTimeout(() => {
         setLoading(false);
-        router.replace("/(lender)/(tabs)");
+        router.replace("/(borrower)/(tabs)");
       }, 1500);
     } catch (error) {
       if (error instanceof ValidationError) {
-        // Set errors for all invalid fields
         error.inner.forEach((err) => {
           if (err.path === "email") setEmailError(err.message);
           if (err.path === "password") setPasswordError(err.message);
@@ -60,64 +56,37 @@ export default function SignInScreen() {
     }
   };
 
-  const handleGoogleSignIn = () => {
-    // TODO: Implement Google sign-in with Cognito
-    console.log("Google sign-in");
-  };
-
-  const handleAppleSignIn = () => {
-    // TODO: Implement Apple sign-in with Cognito
-    console.log("Apple sign-in");
-  };
-
-  const handleFacebookSignIn = () => {
-    // TODO: Implement Facebook sign-in with Cognito
-    console.log("Facebook sign-in");
-  };
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
+      style={{ flex: 1, backgroundColor: "#F3F4F6" }}
     >
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
       >
+        <StatusBar style="dark" />
+        {/* Layer 1: mainBackground with logo */}
+        <Box
+          backgroundColor="mainBackground"
+          alignItems="center"
+          paddingVertical="xl"
+          marginTop="xl"
+        >
+          <Goal size={100} color={theme.colors.darkPrimary} strokeWidth={1.5} />
+          <Text variant="header" marginTop="s">
+            P i d k i
+          </Text>
+        </Box>
+
+        {/* Layer 2: darkNavyBlue form */}
         <Box
           flex={1}
-          backgroundColor="black"
+          backgroundColor="darkNavyBlue"
           padding="l"
-          justifyContent="center"
+          style={{ borderTopLeftRadius: 28, borderTopRightRadius: 28 }}
         >
-          {/* Header */}
-          <Box width="100%" paddingBottom="xl" paddingTop="xl">
-            <Text
-              variant="header"
-              style={{
-                fontSize: 30,
-                fontFamily: "PlusJakartaSans-Bold",
-                color: "#bdcae7",
-                letterSpacing: -0.5,
-                marginBottom: 8,
-              }}
-            >
-              Bienvenido de nuevo
-            </Text>
-            <Text
-              variant="body"
-              style={{
-                fontSize: 16,
-                fontFamily: "PlusJakartaSans-Regular",
-                color: "#667bab",
-                marginBottom: 16,
-              }}
-            >
-              Inicia sesión para continuar
-            </Text>
-          </Box>
-
           {/* Email Field */}
           <TextField
             label="Email"
@@ -176,33 +145,6 @@ export default function SignInScreen() {
             </Button>
           </Box>
 
-          {/* Divider 
-          <Box flexDirection="row" alignItems="center" marginVertical="m">
-            <Box
-              flex={1}
-              height={1}
-              style={{ backgroundColor: "rgba(102, 123, 171, 0.5)" }}
-            />
-            <Text
-              variant="caption"
-              marginHorizontal="m"
-              style={{ color: "#667bab", fontSize: 14 }}
-            >
-              o continuar con
-            </Text>
-            <Box
-              flex={1}
-              height={1}
-              style={{ backgroundColor: "rgba(102, 123, 171, 0.5)" }}
-            />
-          </Box>*/}
-
-          {/* Social Auth Buttons
-          <Box gap="m" marginBottom="m">
-            <SocialAuthButton provider="google" onPress={handleGoogleSignIn} />
-            <SocialAuthButton provider="apple" onPress={handleAppleSignIn} />
-          </Box> */}
-
           <Box flex={1} />
 
           {/* Sign Up Link */}
@@ -214,11 +156,8 @@ export default function SignInScreen() {
           >
             <Text
               variant="body"
-              style={{
-                color: "#667bab",
-                fontSize: 14,
-                fontFamily: "PlusJakartaSans-Regular",
-              }}
+              color="secondary"
+              style={{ fontSize: 14, fontFamily: "PlusJakartaSans-Regular" }}
             >
               ¿No tienes cuenta?{" "}
             </Text>

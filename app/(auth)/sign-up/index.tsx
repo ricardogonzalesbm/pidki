@@ -2,8 +2,11 @@ import Box from "@/components/Box";
 import Text from "@/components/Text";
 import Button from "@/components/ui/Button/Button";
 import TextField from "@/components/ui/TextField/TextField";
+import theme from "@/theme";
 import { signUpSchema } from "@/utils/validationSchemas";
 import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { Goal } from "lucide-react-native";
 import { useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { ValidationError } from "yup";
@@ -50,30 +53,23 @@ export default function SignUpScreen() {
 
   const handleSignUp = async () => {
     try {
-      // Validate all fields
       await signUpSchema.validate(
         { name, email, password, confirmPassword },
         { abortEarly: false },
       );
-
-      // Clear any existing errors
       setNameError("");
       setEmailError("");
       setPasswordError("");
       setConfirmPasswordError("");
-
       setLoading(true);
       // TODO: Implement Cognito sign-up logic here
       console.log("Sign up with:", { name, email, password });
-
-      // Simulate API call
       setTimeout(() => {
         setLoading(false);
         // Navigate to verification screen or main app
       }, 1500);
     } catch (error) {
       if (error instanceof ValidationError) {
-        // Set errors for all invalid fields
         error.inner.forEach((err) => {
           if (err.path === "name") setNameError(err.message);
           if (err.path === "email") setEmailError(err.message);
@@ -85,64 +81,37 @@ export default function SignUpScreen() {
     }
   };
 
-  const handleGoogleSignUp = () => {
-    // TODO: Implement Google sign-up with Cognito
-    console.log("Google sign-up");
-  };
-
-  const handleAppleSignUp = () => {
-    // TODO: Implement Apple sign-up with Cognito
-    console.log("Apple sign-up");
-  };
-
-  const handleFacebookSignUp = () => {
-    // TODO: Implement Facebook sign-up with Cognito
-    console.log("Facebook sign-up");
-  };
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
+      style={{ flex: 1, backgroundColor: "#F3F4F6" }}
     >
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
       >
+        <StatusBar style="dark" />
+        {/* Layer 1: mainBackground with logo */}
+        <Box
+          backgroundColor="mainBackground"
+          alignItems="center"
+          paddingVertical="xl"
+          marginTop="l"
+        >
+          <Goal size={100} color={theme.colors.darkPrimary} strokeWidth={1.5} />
+          <Text variant="header" marginTop="s">
+            P i d k i
+          </Text>
+        </Box>
+
+        {/* Layer 2: darkNavyBlue form */}
         <Box
           flex={1}
-          backgroundColor="black"
+          backgroundColor="darkNavyBlue"
           padding="l"
-          justifyContent="center"
+          style={{ borderTopLeftRadius: 28, borderTopRightRadius: 28 }}
         >
-          {/* Header */}
-          <Box width="100%" paddingBottom="xl" paddingTop="xl">
-            <Text
-              variant="header"
-              style={{
-                fontSize: 30,
-                fontFamily: "PlusJakartaSans-Bold",
-                color: "#bdcae7",
-                letterSpacing: -0.5,
-                marginBottom: 8,
-              }}
-            >
-              Crear Cuenta
-            </Text>
-            <Text
-              variant="body"
-              style={{
-                fontSize: 16,
-                fontFamily: "PlusJakartaSans-Regular",
-                color: "#667bab",
-                marginBottom: 16,
-              }}
-            >
-              Únete a Pidki y comienza a conectar
-            </Text>
-          </Box>
-
           {/* Name Field */}
           <TextField
             label="Nombre Completo"
@@ -226,34 +195,7 @@ export default function SignUpScreen() {
             </Button>
           </Box>
 
-          {/* Divider 
-          <Box flexDirection="row" alignItems="center" marginVertical="m">
-            <Box
-              flex={1}
-              height={1}
-              style={{ backgroundColor: "rgba(102, 123, 171, 0.5)" }}
-            />
-            <Text
-              variant="caption"
-              marginHorizontal="m"
-              style={{ color: "#667bab", fontSize: 14 }}
-            >
-              o regístrate con
-            </Text>
-            <Box
-              flex={1}
-              height={1}
-              style={{ backgroundColor: "rgba(102, 123, 171, 0.5)" }}
-            />
-          </Box>*/}
-
-          {/* Social Auth Buttons 
-          <Box gap="m" marginBottom="m">
-            <SocialAuthButton provider="google" onPress={handleGoogleSignUp} />
-            <SocialAuthButton provider="apple" onPress={handleAppleSignUp} />
-          </Box>
-
-          <Box flex={1} />*/}
+          <Box flex={1} />
 
           {/* Sign In Link */}
           <Box
@@ -264,21 +206,15 @@ export default function SignUpScreen() {
           >
             <Text
               variant="body"
-              style={{
-                color: "#667bab",
-                fontSize: 14,
-                fontFamily: "PlusJakartaSans-Regular",
-              }}
+              color="secondary"
+              style={{ fontSize: 14, fontFamily: "PlusJakartaSans-Regular" }}
             >
               ¿Ya tienes cuenta?{" "}
             </Text>
             <Text
               variant="body"
               color="primary"
-              style={{
-                fontSize: 14,
-                fontFamily: "PlusJakartaSans-Bold",
-              }}
+              style={{ fontSize: 14, fontFamily: "PlusJakartaSans-Bold" }}
               onPress={() => router.push("/(auth)/sign-in")}
             >
               Iniciar Sesión

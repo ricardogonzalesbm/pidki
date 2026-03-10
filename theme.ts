@@ -23,6 +23,7 @@ const palette = {
   yellow500: "#EBC106",
   yellow600: "#D97706",
   darkNavyBlue: "#18233a",
+  darkPrimary: "#fb98ee",
 };
 
 const theme = createTheme({
@@ -79,6 +80,7 @@ const theme = createTheme({
     yellow600: palette.yellow600,
     black: palette.black,
     darkNavyBlue: palette.darkNavyBlue,
+    darkPrimary: palette.darkPrimary,
   },
   spacing: {
     xs: 4,

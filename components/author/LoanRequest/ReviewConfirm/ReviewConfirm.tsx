@@ -5,7 +5,7 @@ import { useCardsStepper } from "@/components/ui/CardsStepper/CardsStepperContex
 import theme from "@/theme";
 import { DefaultMinLoanAmount } from "@/utils/constants";
 import { useRouter } from "expo-router";
-import { PiggyBank } from "lucide-react-native";
+import { Goal } from "lucide-react-native";
 
 type PaybackFrequency = "WEEKLY" | "BI_WEEKLY" | "MONTHLY";
 
@@ -71,8 +71,8 @@ const ReviewConfirm = () => {
 
   return (
     <Box gap="m" paddingBottom="m">
-      <Box alignItems="center">
-        <PiggyBank size={120} color={theme.colors.primary} strokeWidth={1.5} />
+      <Box alignItems="center" marginBottom="xl" marginTop="xl">
+        <Goal size={120} color={theme.colors.primary} strokeWidth={1.5} />
       </Box>
 
       <Box gap="xs">
